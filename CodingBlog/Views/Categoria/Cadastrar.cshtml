@@ -1,0 +1,23 @@
+﻿@model Categoria
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Categorias</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Cadastrar</li>
+      </ol>
+    </nav>
+
+    <h1>Cadastro de categorias</h1>
+
+    <form asp-action="Cadastrar" asp-controller="Categoria" method="post">
+        <div class="mb-3">
+            <label for="Nome" class="form-label">Nome</label>
+            <input type="text" asp-for="Nome" class="form-control" placeholder="Nome da categoria">
+        </div>
+
+        <div >
+            <button class="btn btn-outline-primary" type="submit">Cadastrar</button>
+        </div>
+    </form>
+</div>
