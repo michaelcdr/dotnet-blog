@@ -264,3 +264,23 @@ h5 {
         margin-bottom: 5px;
         margin-right: 5px;
     }
+
+
+
+#pesquisa-mobile{
+    display:block;
+}
+@media (min-width:991px) {
+    #pesquisa-mobile {
+        display: none;
+    }
+}
+
+#pesquisa-desktop {
+    display: none;
+}
+@media (min-width:991px) {
+    #pesquisa-desktop {
+        display: block;
+    }
+}
