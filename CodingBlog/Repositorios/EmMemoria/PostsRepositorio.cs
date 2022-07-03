@@ -34,7 +34,7 @@ namespace CodingBlog.Repositorios.EmMemoria
                 "img1.jpg",
                 "michael",
                 "AWS,DevOps",
-                1
+                2
             )
         };       
 

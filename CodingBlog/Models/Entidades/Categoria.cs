@@ -15,5 +15,11 @@
             this.Posts = new List<Post>();
             this.Nome = nome;
         }
+        public Categoria(int id, string nome)
+        {
+            this.Posts = new List<Post>();
+            this.Nome = nome;
+            this.Id = id;   
+        }
     }
 }

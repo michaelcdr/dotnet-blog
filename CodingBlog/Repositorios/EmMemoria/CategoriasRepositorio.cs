@@ -7,8 +7,8 @@ namespace CodingBlog.Repositorios.EmMemoria
     {
         private List<Categoria> dados = new()
         {
-            new Categoria("C#"),
-            new Categoria("AWS")
+            new Categoria(1,"C#"),
+            new Categoria(2, "AWS")
         };
 
         public CategoriasRepositorio()
