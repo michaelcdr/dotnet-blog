@@ -1,0 +1,15 @@
+﻿@model List<Categoria>
+<div class="card mb-3">
+    <div class="card-body">
+        <h3>Categorias</h3>
+        <ul class="list-group">
+            @foreach (var categoria in Model)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a asp-controller="Post" asp-action="PorCategoria" asp-route-id="@categoria.Id">@categoria.Nome</a>
+                    <span class="badge bg-primary rounded-pill">@categoria.Posts.Count()</span>
+                </li>
+            } 
+        </ul>
+    </div>
+</div>

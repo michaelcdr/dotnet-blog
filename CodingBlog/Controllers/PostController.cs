@@ -1,9 +1,6 @@
 ﻿using CodingBlog.Interfaces;
 using CodingBlog.Models;
-using CodingBlog.Models.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 namespace CodingBlog.Controllers
 {
@@ -24,12 +21,12 @@ namespace CodingBlog.Controllers
             this._postsRepositorios = postsRepositorios;
         }
 
+        [Route("Post/PorTag/{tag}")]
         public IActionResult PorTag(string tag)
         {  
             var model = new PostsPorTagViewModel(
                 _postsRepositorios.ObterPorTags(tag),
                 _postsRepositorios.ObterTodasTags(),
-                _postsRepositorios.ObterRecentes(),
                 _categoriasRepositorio.ObterTodas()
             );
             return View(model);
@@ -43,7 +40,7 @@ namespace CodingBlog.Controllers
                 _postsRepositorios.ObterRecentes(),
                 _categoriasRepositorio.ObterTodas()
             );
-            return View();
+            return View(model);
         } 
 
         public IActionResult Detalhes(int id)
@@ -51,7 +48,6 @@ namespace CodingBlog.Controllers
             var model = new PostDetalhesViewModel(
                 _postsRepositorios.Obter(id),
                 _postsRepositorios.ObterTodasTags(),
-                _postsRepositorios.ObterRecentes(),
                 _categoriasRepositorio.ObterTodas()
             );
             return View(model);

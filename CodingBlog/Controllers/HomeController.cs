@@ -11,8 +11,7 @@ namespace CodingBlog.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ICategoriasRepositorio _categoriasRepositorio;
-        private readonly IPostsRepositorio _postsRepositorios;
-        private readonly AppDbContext _context;
+        private readonly IPostsRepositorio _postsRepositorios; 
 
         public HomeController(
                 ILogger<HomeController> logger,
@@ -26,17 +25,10 @@ namespace CodingBlog.Controllers
         }
 
         public IActionResult Index()
-        { 
-            ViewBag.Categorias = _categoriasRepositorio.ObterTodas();
-            ViewBag.Tags = _postsRepositorios.ObterTodasTags();
+        {  
             ViewBag.PostsRecentes = _postsRepositorios.ObterRecentes();
             return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        } 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
