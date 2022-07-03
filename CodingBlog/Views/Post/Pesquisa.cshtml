@@ -42,15 +42,21 @@
                                         <a class="url fn n" href="#">@post.CriadoPor</a>
                                     </span>
                                 </span>
-                               
+                                
                             </div>
                         </header>
                         <div class="article-img pb-3">
                             <img src="~/img/artigos/@post.Imagem" alt="@post.Titulo" title="@post.Titulo">
                         </div>
                         <div class="article-content">
-                            @post.Descritivo
+                            @Html.Raw(post.ObterPedacoDescritivo())
                         </div> 
+                        <div class="lista-tags">
+                            @foreach (var tag in post.TagsItens)
+                            {
+                                <a asp-action="PorTag" asp-controller="Post" asp-route-tag="@tag">@tag</a>
+                            }
+                        </div>
                     </div>
                 </article>
             }

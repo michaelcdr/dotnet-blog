@@ -11,6 +11,7 @@ namespace CodingBlog.Models
         public Categoria Categoria { get; set; }
         public int CategoriaId { get; set; }
         public DateTime CadastradoEm{ get; set; }
+        public List<string> TagsItens { get; set; }
         public Post(
             int id, string titulo, string descritivo, 
             string imagem, string criadoPor, string tags,
@@ -25,6 +26,7 @@ namespace CodingBlog.Models
             this.CategoriaId = categoriaId;
             this.CadastradoEm = data;
             this.Categoria = new Categoria();
+            this.TagsItens = tags.Split(',').ToList();
         }
         
         public Post()

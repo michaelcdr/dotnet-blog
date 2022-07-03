@@ -35,6 +35,12 @@
             <div class="article-content">
                 @Html.Raw(post.ObterPedacoDescritivo())
             </div> 
+            <div class="lista-tags">
+                @foreach (var tag in post.TagsItens)
+                {
+                    <a asp-action="PorTag" asp-controller="Post" asp-route-tag="@tag">@tag</a>
+                }
+            </div>
         </div>
     </article>
 }
