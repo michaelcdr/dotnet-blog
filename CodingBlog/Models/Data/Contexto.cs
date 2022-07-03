@@ -12,11 +12,23 @@
                 new Post(
                     1,
                     "Tratando Exceptions com C# 9",
-                    @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    @"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
                     ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
                     Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
-                    posuere, laoreet sapien...",
-                    "img1.jpg",
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>",
+                    "imagem1.jpg",
                     "michael",
                     "C#,Exceptions",
                     1,
@@ -24,16 +36,28 @@
                 ),
                 new Post(
                     2,
-                    "Usuando AWS Parameter Store para ASP.NET Core Data Protection Keys",
-                    @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    "Usando AWS Parameter Store para ASP.NET Core Data Protection Keys",
+                    @"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
                     ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
                     Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
-                    posuere, laoreet sapien...",
-                    "img1.jpg",
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>",
+                    "imagem2.jpg",
                     "michael",
                     "AWS,DevOps",
                     2,
-                    new DateTime(2022,1,1)
+                    new DateTime(2022, 1, 1)
                 ),new Post(
                     3,
                     "Hello World com MVC 6",
@@ -48,8 +72,12 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
                     ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
                     Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
                     posuere, laoreet sapien.<p>",
-                    "img1.jpg",
+                    "imagem3.jpg",
                     "michael",
                     "C#, Asp.Net, MVC",
                     3,
