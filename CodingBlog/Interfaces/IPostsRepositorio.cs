@@ -10,5 +10,6 @@ namespace CodingBlog.Interfaces
         List<Post> ObterPorTags(string tag);
         List<Post> ObterPorCategoria(int id);
         Post Obter(int id);
+        List<Post> ObterPorTermoPesquisa(string pesquisa);
     }
 }

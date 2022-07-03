@@ -33,7 +33,7 @@
                 <img src="~/img/artigos/@post.Imagem" alt="@post.Titulo" title="@post.Titulo">
             </div>
             <div class="article-content">
-                @post.Descritivo
+                @Html.Raw(post.ObterPedacoDescritivo())
             </div> 
         </div>
     </article>

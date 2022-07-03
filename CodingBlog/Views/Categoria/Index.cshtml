@@ -1,50 +1,32 @@
 ﻿@model List<Categoria>
 
-<div class="container">
-    <div class="card mb-3">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-0"> 
-                            <li class="breadcrumb-item active" aria-current="page">Categorias</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <h1>Lista de categorias</h1>
-            @if(Model == null || Model.Count == 0)
+<vc:carrossel></vc:carrossel>
+
+
+
+<div class="container  pt-3">
+   <nav aria-label=" breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active text-white" aria-current="page">Lista de categorias</li>
+        </ol>
+    </nav> 
+
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="alert alert-info">Nenhuma categoria cadastrada</div>
+    }
+    else
+    {
+        <ul class="list-group ">
+            @foreach (var item in Model)
             {
-                <div class="alert alert-info">Nenhuma categoria cadastrada</div>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a asp-action="PorCategoria" asp-controller="Post" asp-route-id="@item.Id">
+                        @item.Nome 
+                    </a>
+                    <span class="badge bg-primary rounded-pill float-end">@item.Posts.Count()</span>
+                </li>
             }
-            else
-            {
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th width="10px"></th>
-                            <th>Nome</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                <button class="btn btn-danger" type="button">Remover</button>
-                            </td>
-                            <td>@item.Nome</td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            }
-            
-        </div>
-    </div>
-    <div>
-        <a asp-action="Cadastrar" class="btn btn-primary">Cadastrar</a>
-    </div>
+        </ul> 
+    }   
 </div>

@@ -24,6 +24,7 @@ namespace CodingBlog.Controllers
         [Route("Post/PorTag/{tag}")]
         public IActionResult PorTag(string tag)
         {  
+            ViewBag.Tag = tag;
             var model = new PostsPorTagViewModel(
                 _postsRepositorios.ObterPorTags(tag),
                 _postsRepositorios.ObterTodasTags(),
@@ -33,7 +34,10 @@ namespace CodingBlog.Controllers
         } 
 
         public IActionResult PorCategoria(int id)
-        {  
+        {
+            Categoria categoria = _categoriasRepositorio.ObterPorId(id);
+            ViewBag.Categoria = categoria.Nome;
+
             var model = new PostsPorCategoriaViewModel(
                 _postsRepositorios.ObterPorCategoria(id),
                 _postsRepositorios.ObterTodasTags(),
@@ -51,6 +55,14 @@ namespace CodingBlog.Controllers
                 _categoriasRepositorio.ObterTodas()
             );
             return View(model);
+        }
+
+        [Route("Post/Pesquisa/{pesquisa}")]
+        public IActionResult Pesquisa(string pesquisa)
+        {
+            ViewBag.Pesquisa = pesquisa;    
+            var posts = _postsRepositorios.ObterPorTermoPesquisa(pesquisa);
+            return View(posts);
         }
     }
 }

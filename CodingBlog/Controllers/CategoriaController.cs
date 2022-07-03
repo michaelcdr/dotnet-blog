@@ -1,8 +1,5 @@
-﻿using CodingBlog.Models;
-using CodingBlog.Interfaces;
-using CodingBlog.Models.Data;
+﻿using CodingBlog.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CodingBlog.Controllers
 {
@@ -21,26 +18,25 @@ namespace CodingBlog.Controllers
 
         public IActionResult Index()
         { 
-            ViewBag.categorias = _categoriasRepositorio.ObterTodas();
-            ViewBag.postsRecentes =  _postsRepositorio.ObterRecentes();
-            return View();
+            var categorias = _categoriasRepositorio.ObterTodas(); 
+            return View(categorias);
         }
 
-        public IActionResult Cadastrar()
-        {
-            return View();
-        }
+        //public IActionResult Cadastrar()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public IActionResult Cadastrar(Categoria categoria)
-        {
-            if (ModelState.IsValid)
-            {
-                // _appDbContext.Categorias.Add(categoria);
-                // await _appDbContext.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(categoria);
-        }
+        //[HttpPost]
+        //public IActionResult Cadastrar(Categoria categoria)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // _appDbContext.Categorias.Add(categoria);
+        //        // await _appDbContext.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(categoria);
+        //}
     }
 }

@@ -5,7 +5,18 @@
 
 <vc:carrossel></vc:carrossel>
 
-<div class="container pt-3">
+<div class="">
+    <div class="container  pt-3">
+        <nav aria-label=" breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li> 
+                <li class="breadcrumb-item active text-white" aria-current="page">Detalhes do Post</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="container">
     <div class="row">
         <div class="col-md-8 col-sm-12 col-xs-12">
             <article class="card mb-3">
@@ -39,7 +50,7 @@
                         <img src="~/img/artigos/@Model.Post.Imagem" alt="@Model.Post.Titulo" title="@Model.Post.Titulo">
                     </div>
                     <div class="article-content">
-                        @Model.Post.Descritivo
+                        @Html.Raw(Model.Post.Descritivo)
                     </div> 
                 </div>
             </article>

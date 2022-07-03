@@ -10,6 +10,7 @@ builder.Services.AddControllersWithViews();
 
 var connection = builder.Configuration["ConexaoSqlite:SqliteConnectionString"];
 builder.Services.AddSqlite<AppDbContext>(connection);
+builder.Services.AddTransient<IContexto, Contexto>();
 builder.Services.AddTransient<ICategoriasRepositorio,CategoriasRepositorio>();
 builder.Services.AddTransient<IPostsRepositorio,PostsRepositorio>();
 
