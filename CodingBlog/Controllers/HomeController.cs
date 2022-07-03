@@ -27,6 +27,7 @@ namespace CodingBlog.Controllers
         public IActionResult Index()
         {  
             ViewBag.PostsRecentes = _postsRepositorios.ObterRecentes();
+
             return View();
         } 
 
