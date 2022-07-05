@@ -130,7 +130,7 @@ table a.btn-outline-primary:focus, a.btn-outline-primary:focus, .btn-outline-pri
 table a.btn-primary:hover, a.btn-primary:hover, .btn-primary:hover,
 table a.btn-primary:active, a.btn-primary:active, .btn-primary:active,
 table a.btn-primary:focus, a.btn-primary:focus, .btn-primary:focus {
-    color: #fff !important;
+    color: var(--primary-color) !important;
     background-color: unset;
     border-color: var(--primary-color);
 }
@@ -172,8 +172,8 @@ table a.btn-primary:focus, a.btn-primary:focus, .btn-primary:focus {
 }
 
 .article-details {
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 0x;
+    padding-bottom: 0px;
 }
 
     .article-details span {
@@ -264,7 +264,12 @@ h5 {
         margin-bottom: 5px;
         margin-right: 5px;
     }
-
+article .lista-tags > a {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-color: var(--default-color);
+    background-color: var(--default-color);
+}
 
 
 #pesquisa-mobile{
@@ -283,4 +288,7 @@ h5 {
     #pesquisa-desktop {
         display: block;
     }
+}
+.posted-on {
+    font-size: 0.9rem;
 }

@@ -10,7 +10,7 @@
         <nav aria-label=" breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li> 
-                <li class="breadcrumb-item active text-white" aria-current="page">Artigos filtrados pela tag @ViewBag.Tag</li>
+                <li class="breadcrumb-item active text-white" aria-current="page">Artigos com a tag @ViewBag.Tag</li>
             </ol>
         </nav>
     </div>
@@ -31,3 +31,10 @@
         </div>
     </div>
 </div>
+@section scripts{
+    <script>
+        $(function(){
+            $(".nav-link").first().addClass("active");
+        });
+    </script>
+}

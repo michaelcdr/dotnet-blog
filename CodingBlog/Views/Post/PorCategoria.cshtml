@@ -8,8 +8,8 @@
     <div class="container  pt-3">
         <nav aria-label=" breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li> 
-                <li class="breadcrumb-item active text-white" aria-current="page">Artigos filtrados pela categoria @ViewBag.Categoria</li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Categoria">Categorias</a></li> 
+                <li class="breadcrumb-item active text-white" aria-current="page">Artigos em @ViewBag.Categoria</li>
             </ol>
         </nav>
     </div>
@@ -30,3 +30,11 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        $(function(){
+            $(".nav-link").last().addClass("active");
+        });
+    </script>
+}

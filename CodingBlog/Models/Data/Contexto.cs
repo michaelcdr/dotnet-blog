@@ -82,6 +82,54 @@
                     "C#, Asp.Net, MVC",
                     3,
                     new DateTime(2018,4,10)
+                ),new Post(
+                    4,
+                    "Criação de TagHelpers customizadas no com ASP.NET Core 2.0",
+                     @"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>",
+                    "imagem3.jpg",
+                    "michael",
+                    "C#, Asp.Net, MVC",
+                    3,
+                    new DateTime(2018,4,10)
+                ),new Post(
+                    5,
+                    "Adicionando tags amigáveis para SEO com .NET Core",
+                     @"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consequat odio vitae 
+                    ornare tristique. Vestibulum nulla lectus, venenatis vitae laoreet vel, aliquet quis sem. 
+                    Praesent placerat finibus leo et laoreet. Curabitur id est interdum, volutpat tortor 
+                    posuere, laoreet sapien.<p>",
+                    "imagem3.jpg",
+                    "michael",
+                    "C#, Asp.Net, MVC",
+                    3,
+                    new DateTime(2018,4,10)
                 )
             }; 
 

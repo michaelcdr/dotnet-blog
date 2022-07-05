@@ -34,6 +34,7 @@ namespace CodingBlog.Models
             this.Categoria = new Categoria();
         }
 
+        public string ObterDataECriador() => $"Criado por <strong>{this.CriadoPor}</strong> em <strong>{CadastradoEm.ToString("dd.MM.yyyy")}</strong>";
         public string ObterPedacoDescritivo()
         {
             if (string.IsNullOrEmpty(this.Descritivo)) return string.Empty;
