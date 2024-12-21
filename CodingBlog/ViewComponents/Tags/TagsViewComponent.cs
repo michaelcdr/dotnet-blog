@@ -1,20 +1,20 @@
-﻿using CodingBlog.Interfaces;
+﻿using CodingBlog.HttpClients;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodingBlog.ViewComponents.Tags
 {
     public class TagsViewComponent : ViewComponent
     {
-        private readonly IPostsRepositorio _postsRepositorios;
+        private readonly IBlogApiHttpClient _client;
 
-        public TagsViewComponent(IPostsRepositorio postsRepositorios)
+        public TagsViewComponent(IBlogApiHttpClient client)
         {
-            this._postsRepositorios = postsRepositorios;
+            _client = client;
         }
 
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            List<string> tags = _postsRepositorios.ObterTodasTags();
+            List<string> tags = await _client.ObterTodasTags();
             return View(tags);
         }
     }

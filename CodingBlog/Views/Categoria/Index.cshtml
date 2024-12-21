@@ -1,4 +1,4 @@
-﻿@model List<Categoria>
+﻿@model List<CategoriaViewModel>
 
 <vc:carrossel></vc:carrossel>
 
@@ -24,7 +24,7 @@
                     <a asp-action="PorCategoria" asp-controller="Post" asp-route-id="@item.Id">
                         @item.Nome 
                     </a>
-                    <span class="badge bg-primary rounded-pill float-end">@item.Posts.Count()</span>
+                    <span class="badge bg-primary rounded-pill float-end">@item.QtdPosts</span>
                 </li>
             }
         </ul> 

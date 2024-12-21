@@ -1,22 +1,14 @@
-using CodingBlog.Interfaces;
-using CodingBlog.Models.Data;
-using CodingBlog.Repositorios.EmMemoria;
-using Microsoft.EntityFrameworkCore;
+using CodingBlog.HttpClients;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-var connection = builder.Configuration["ConexaoSqlite:SqliteConnectionString"];
-builder.Services.AddSqlite<AppDbContext>(connection);
-builder.Services.AddTransient<IContexto, Contexto>();
-builder.Services.AddTransient<ICategoriasRepositorio,CategoriasRepositorio>();
-builder.Services.AddTransient<IPostsRepositorio,PostsRepositorio>();
+builder.Services.AddHttpClient<IBlogApiHttpClient, BlogApiHttpClient>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
-//await VerificarDBExiste(app.Services, app.Logger);
-
+ 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -33,15 +25,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-
-async Task VerificarDBExiste(IServiceProvider services, ILogger logger)
-{
-    logger.LogInformation(
-        "Garantindo que o banco de dados exista e esteja na string de conexão :" +
-        " '{connectionString}'", connection
-    );
-    using var db = services.CreateScope().ServiceProvider.GetRequiredService<AppDbContext>();
-    await db.Database.EnsureCreatedAsync();
-    await db.Database.MigrateAsync();
-}

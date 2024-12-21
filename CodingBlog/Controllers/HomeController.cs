@@ -1,39 +1,31 @@
-﻿using CodingBlog.Interfaces;
+﻿using CodingBlog.HttpClients;
 using CodingBlog.Models;
-using CodingBlog.Models.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
-namespace CodingBlog.Controllers
+namespace CodingBlog.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly ILogger<HomeController> _logger;
+    private readonly IBlogApiHttpClient _client;
+
+    public HomeController(ILogger<HomeController> logger,
+                          IBlogApiHttpClient client)
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ICategoriasRepositorio _categoriasRepositorio;
-        private readonly IPostsRepositorio _postsRepositorios; 
+        _logger = logger;
+        _client = client; 
+    }
 
-        public HomeController(
-                ILogger<HomeController> logger,
-                ICategoriasRepositorio categoriasRepositorio,
-                IPostsRepositorio postsRepositorios
-            )
-        {
-            this._logger = logger;
-            this._categoriasRepositorio = categoriasRepositorio;
-            this._postsRepositorios = postsRepositorios;
-        }
+    public IActionResult Index()
+    {  
+        ViewBag.PostsRecentes = _client.ObterPostsRecentes();
+        return View();
+    } 
 
-        public IActionResult Index()
-        {  
-            ViewBag.PostsRecentes = _postsRepositorios.ObterRecentes();
-            return View();
-        } 
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

@@ -1,42 +1,35 @@
-﻿using CodingBlog.Interfaces;
+﻿using CodingBlog.HttpClients;
+using CodingBlog.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CodingBlog.Controllers
+namespace CodingBlog.Controllers;
+
+public class CategoriaController : Controller
 {
-    public class CategoriaController : Controller
+    private readonly IBlogApiHttpClient _client;
+
+    public CategoriaController(IBlogApiHttpClient client)
     {
-        private readonly ICategoriasRepositorio _categoriasRepositorio;
-        private readonly IPostsRepositorio _postsRepositorio;
+        _client = client;
+    }
 
-        public CategoriaController(
-            ICategoriasRepositorio categoriasRepositorio,
-            IPostsRepositorio postsRepositorio)
-        {
-            this._categoriasRepositorio = categoriasRepositorio;
-            this._postsRepositorio = postsRepositorio;
-        }
+    public async Task<IActionResult> Index()
+    { 
+        var categorias = await _client.ObterCategorias(); 
+        return View(categorias);
+    }
 
-        public IActionResult Index()
-        { 
-            var categorias = _categoriasRepositorio.ObterTodas(); 
-            return View(categorias);
-        }
+    public IActionResult Cadastrar()
+    {
+        return View();
+    }
 
-        //public IActionResult Cadastrar()
-        //{
-        //    return View();
-        //}
+    [HttpPost]
+    public IActionResult Cadastrar(CategoriaCadastroModel categoria)
+    {
+        if (!ModelState.IsValid) return View(categoria);
 
-        //[HttpPost]
-        //public IActionResult Cadastrar(Categoria categoria)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // _appDbContext.Categorias.Add(categoria);
-        //        // await _appDbContext.SaveChangesAsync();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(categoria);
-        //}
+        _client.CriarCategoria(categoria);
+        return RedirectToAction("Index");        
     }
 }

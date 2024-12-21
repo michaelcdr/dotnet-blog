@@ -1,4 +1,4 @@
-﻿@model List<Categoria>
+﻿@model List<CategoriaViewModel>
 <div class="card mb-3">
     <div class="card-body">
         <h3>Categorias</h3>
@@ -7,7 +7,7 @@
             {
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <a asp-controller="Post" asp-action="PorCategoria" asp-route-id="@categoria.Id">@categoria.Nome</a>
-                    <span class="badge bg-primary rounded-pill">@categoria.Posts.Count()</span>
+                    <span class="badge bg-primary rounded-pill">@categoria.QtdPosts</span>
                 </li>
             } 
         </ul>

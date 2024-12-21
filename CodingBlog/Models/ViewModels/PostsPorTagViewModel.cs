@@ -1,19 +1,11 @@
-namespace CodingBlog.Models
-{
-    public class PostsPorTagViewModel
-    {
-        public PostsPorTagViewModel(
-            List<Post> posts, 
-            List<string> tags, 
-            List<Categoria> categorias)
-        {
-            Posts = posts;
-            Tags = tags; 
-            Categorias = categorias;
-        }
+namespace CodingBlog.Models;
 
-        public List<Post> Posts { get; }
-        public List<string> Tags { get; } 
-        public List<Categoria> Categorias { get; }
+public class PostsPorTagViewModel
+{
+    public PostsPorTagViewModel(List<PostViewModel> posts )
+    {
+        Posts = posts; 
     }
-} 
+
+    public List<PostViewModel> Posts { get; } 
+}

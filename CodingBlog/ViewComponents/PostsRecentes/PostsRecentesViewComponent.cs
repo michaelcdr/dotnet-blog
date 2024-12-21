@@ -1,22 +1,21 @@
-﻿using CodingBlog.Interfaces;
+﻿using CodingBlog.HttpClients;
 using CodingBlog.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CodingBlog.ViewComponents.Carrossel
+namespace CodingBlog.ViewComponents.Carrossel;
+
+public class PostsRecentesViewComponent : ViewComponent
 {
-    public class PostsRecentesViewComponent : ViewComponent
+    private readonly IBlogApiHttpClient _client;
+
+    public PostsRecentesViewComponent(IBlogApiHttpClient client)
     {
-        private readonly IPostsRepositorio _postsRepositorios; 
-
-        public PostsRecentesViewComponent(IPostsRepositorio postsRepositorios)
-        {
-            this._postsRepositorios = postsRepositorios; 
-        }
-
-        public IViewComponentResult Invoke() 
-        {
-            List<Post> posts = _postsRepositorios.ObterRecentes();
-            return View(posts);
-        }
+        _client = client;
     }
-} 
+
+    public async Task<IViewComponentResult> InvokeAsync() 
+    {
+        List<PostRecenteViewModel> posts = await _client.ObterPostsRecentes();
+        return View(posts);
+    }
+}

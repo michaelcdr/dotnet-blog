@@ -4,21 +4,14 @@ namespace CodingBlog.Models
 {
     public class PostsPorCategoriaViewModel
     {
-        public PostsPorCategoriaViewModel(
-            List<Post> posts, 
-            List<string> tags,
-            List<Post> postsRececentes,
-            List<Categoria> categorias)
+        public PostsPorCategoriaViewModel(List<PostViewModel> posts,
+                                          CategoriaViewModel categoria)
         {
-            Posts = posts;
-            Tags = tags;
-            PostsRececentes = postsRececentes;
-            Categorias = categorias;
+            Posts = posts; 
+            Categoria = categoria;
         }
 
-        public List<Post> Posts { get; }
-        public List<string> Tags { get; }
-        public List<Post> PostsRececentes { get; }
-        public List<Categoria> Categorias { get; }
+        public List<PostViewModel> Posts { get; }
+        public CategoriaViewModel Categoria { get; set; }
     }
 } 

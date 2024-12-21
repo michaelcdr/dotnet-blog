@@ -1,9 +1,10 @@
-﻿@model List<Post>
+﻿@model List<PostRecenteViewModel>
+
 <div class="card mb-3">
     <div class="card-body">
         <h3>Artigos recentes</h3>
         <ul class="list-group">
-            @foreach (var post in Model)
+            @foreach (PostRecenteViewModel post in Model)
             {
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <a asp-controller="Post" asp-action="Detalhes" asp-route-id="@post.Id" >@post.Titulo</a>

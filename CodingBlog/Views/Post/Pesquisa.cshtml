@@ -1,4 +1,4 @@
-﻿@model List<Post>
+﻿@model List<PostPesquisaViewModel>
 @{
     ViewData["Title"] = "Lista de posts por tag";
 }
@@ -29,7 +29,7 @@
                             <div class="article-details">
                                 <span class="posted-on">
                                     <a asp-action="Detalhes" asp-controller="post" asp-route-id="@post.Id" rel="bookmark">
-                                        @Html.Raw(post.ObterDataECriador())
+                                        @Html.Raw(post.DataECriador)
                                     </a>
                                 </span>   
                             </div>
@@ -38,13 +38,13 @@
                             <img src="~/img/artigos/@post.Imagem" alt="@post.Titulo" title="@post.Titulo">
                         </div>
                         <div class="article-content">
-                            @Html.Raw(post.ObterPedacoDescritivo())
+                            @Html.Raw(post.Descritivo)
                             <div class="text-end">
                                 <a class="btn btn-primary" asp-action="Detalhes" asp-controller="post" asp-route-id="@post.Id">Continue lendo</a>
                             </div>
                         </div> 
                         <div class="lista-tags">
-                            @foreach (var tag in post.TagsItens)
+                            @foreach (var tag in post.Tags)
                             {
                                 <a asp-action="PorTag" asp-controller="Post" asp-route-tag="@tag">@tag</a>
                             }

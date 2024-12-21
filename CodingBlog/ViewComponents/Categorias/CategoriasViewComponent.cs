@@ -1,4 +1,4 @@
-﻿using CodingBlog.Interfaces;
+﻿using CodingBlog.HttpClients;
 using CodingBlog.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,16 +6,16 @@ namespace CodingBlog.ViewComponents.Carrossel
 {
     public class CategoriasViewComponent : ViewComponent
     {
-        private readonly ICategoriasRepositorio _categoriasRepositorios; 
+        private readonly IBlogApiHttpClient _client; 
 
-        public CategoriasViewComponent(ICategoriasRepositorio categoriasRepositorios)
+        public CategoriasViewComponent(IBlogApiHttpClient categoriasRepositorios)
         {
-            this._categoriasRepositorios = categoriasRepositorios; 
+            _client = categoriasRepositorios; 
         }
 
-        public IViewComponentResult Invoke() 
+        public async Task<IViewComponentResult> InvokeAsync() 
         {
-            List<Categoria> categorias = _categoriasRepositorios.ObterTodas();
+            List<CategoriaViewModel> categorias = await _client.ObterCategorias();
             return View(categorias);
         }
     }
