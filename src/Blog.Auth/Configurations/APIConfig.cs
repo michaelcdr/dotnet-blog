@@ -1,4 +1,6 @@
-﻿namespace Blog.Auth.Configurations;
+﻿using Blog.Auth.Jwt;
+
+namespace Blog.Auth.Configurations;
 
 public static class APIConfig
 {

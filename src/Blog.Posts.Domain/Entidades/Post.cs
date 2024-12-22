@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Blog.Domain;
+namespace Blog.Posts.Domain;
 
 public class Post
 {

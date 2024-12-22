@@ -1,4 +1,4 @@
-﻿namespace Blog.Domain;
+﻿namespace Blog.Posts.Domain;
 
 public class Categoria
 {

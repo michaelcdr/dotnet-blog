@@ -1,7 +1,7 @@
 using Blog.Data.Context;
 using Blog.Data.Repositorios.SQLite;
-using Blog.Domain;
-using Blog.Domain.Repositories;
+using Blog.Posts.Domain;
+using Blog.Posts.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,20 +10,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-var connection = builder.Configuration["ConexaoSqlite:SqliteConnectionString"];
-builder.Services.AddSqlite<AppDbContext>(connection);
-
-//builder.Services.AddTransient<IContexto, Contexto>();
-//builder.Services.AddTransient<ICategoriasRepositorio,CategoriasRepositorio>();
-//builder.Services.AddTransient<IPostsRepositorio,PostsRepositorio>();
-
+//var connection = builder.Configuration["ConexaoSqlite:SqliteConnectionString"];
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite("Data Source=app.db")
+);
 builder.Services.AddScoped<ICategoriasRepositorio, CategoriasSQLiteRepositorio>();
 builder.Services.AddScoped<IPostsRepositorio, PostsSQLiteRepositorio>();
+
+// in memory
+//builder.Services.AddTransient<IContexto, Contexto>();
+//builder.Services.AddTransient<ICategoriasRepositorio,CategoriasRepositorio>();
+//builder.Services.AddTransient<IPostsRepositorio,PostsRepositorio>(); 
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+
+await VerificarDBExiste(app.Services, logger);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -44,10 +49,13 @@ async Task VerificarDBExiste(IServiceProvider services, ILogger logger)
 {
     logger.LogInformation(
         "Garantindo que o banco de dados exista e esteja na string de conexão :" +
-        " '{connectionString}'", connection
+        " '{connectionString}'",
+        "Data Source=app.db"
     );
 
     using var db = services.CreateScope().ServiceProvider.GetRequiredService<AppDbContext>();
+
+    bool temBanco = await db.Database.EnsureCreatedAsync();
 
     int qtdPendingMigrations = db.Database.GetPendingMigrations().Count();
 
@@ -59,16 +67,14 @@ async Task VerificarDBExiste(IServiceProvider services, ILogger logger)
 
     if (!await db.Categorias.AnyAsync())
     {
-        var categoria = new Categoria(0, "Categoria 1");
-        db.Categorias.Add(categoria);
-        await db.SaveChangesAsync();
-
-
-        if (!await db.Posts.AnyAsync())
+        var categoria = new Categoria(0, "Categoria 1", new List<Post>
         {
-            db.Posts.Add(new Post(0, "Post 1", "fdasfd", null, "adfasfd", "fasfda", categoria.Id, DateTime.Now));
-            db.Posts.Add(new Post(0, "Post 2", "fdasfd", null, "adfasfd", "fasfda", categoria.Id, DateTime.Now));
-            await db.SaveChangesAsync();
-        }
+            new Post(0, "Post 1", "fdasfd", null, "adfasfd", "fasfda", 0, DateTime.Now),
+            new Post(0, "Post 2", "fdasfd", null, "adfasfd", "fasfda", 0, DateTime.Now)
+        });
+        
+        db.Categorias.Add(categoria);
+
+        await db.SaveChangesAsync();
     }
 }

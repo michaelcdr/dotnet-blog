@@ -1,6 +1,6 @@
-﻿using Blog.Domain;
+﻿using Blog.Posts.Domain;
 
-namespace Blog.Data.Context;
+namespace Blog.Posts.Data.Context;
 
 public interface IContexto
 {

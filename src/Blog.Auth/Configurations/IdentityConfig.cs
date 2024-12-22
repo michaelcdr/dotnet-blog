@@ -19,6 +19,7 @@ public static class IdentityConfig
         services.AddIdentity<IdentityUser, IdentityRole>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<AuthContext>()
+            .AddErrorDescriber<IdentityPortuguesMessages>()
             .AddDefaultTokenProviders();
 
         AddJWTConfiguration(services, configuration);
@@ -49,7 +50,7 @@ public static class IdentityConfig
                                             IConfiguration configuration)
     {
         // Configurando JWT
-        var appSettingsSection = configuration.GetSection("AppSettings");
+        var appSettingsSection = configuration.GetSection("JwtAppSettings");
         services.Configure<JwtAppSettings>(appSettingsSection);
 
         var appSettings = appSettingsSection.Get<JwtAppSettings>();

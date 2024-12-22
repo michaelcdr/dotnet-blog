@@ -1,21 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Blog.Data.Context;
+using Blog.Posts.API.DTOs;
+using Blog.Posts.Domain;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Blog.API.Controllers
+namespace Blog.Posts.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PostsController : ControllerBase
     {
-        // GET: api/<PostsController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly AppDbContext _db;
+
+        public PostsController(AppDbContext appDb)
         {
-            return new string[] { "value1", "value2" };
+            _db = appDb;
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var posts = await _db.Posts.AsNoTracking().Select(e => new PostDTO
+            {
+                Id = e.Id,
+                Titulo = e.Titulo
+
+            }).ToListAsync();
+
+            return Ok(posts);
         }
 
-        // GET api/<PostsController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
@@ -24,8 +40,9 @@ namespace Blog.API.Controllers
 
         // POST api/<PostsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(Post post)
         {
+            _db.Posts.Add(post);
         }
 
         // PUT api/<PostsController>/5

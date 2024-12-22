@@ -2,6 +2,7 @@
 using CodingBlog.Configuracoes;
 using CodingBlog.Models;
 using Microsoft.Extensions.Options;
+using System.Text.Json;
 
 namespace CodingBlog.HttpClients;
 
@@ -21,31 +22,49 @@ public class BlogApiHttpClient : ServiceBase, IBlogApiHttpClient
 
     public async Task CriarCategoria(CategoriaCadastroModel categoria)
     {
-        throw new NotImplementedException();
+        var stringContent = new StringContent(
+            JsonSerializer.Serialize(categoria)
+        );
+
+        HttpResponseMessage response = await _httpClient.PostAsync($"api/categorias", stringContent);
+
+        response.EnsureSuccessStatusCode(); 
     }
 
     public async Task<CategoriaEdicaoModel> ObterCategoriaPorId(int id)
     {
-        throw new NotImplementedException();
+        HttpResponseMessage response = await _httpClient.GetAsync($"api/categorias/{id}");
+
+        var categoria = await Deserialize<CategoriaEdicaoModel>(response);
+
+        return categoria;
     }
 
     public async Task<List<CategoriaViewModel>> ObterCategorias()
     {
         HttpResponseMessage response = await _httpClient.GetAsync("api/categorias");
 
-        var carouselItems = await Deserialize<List<CategoriaViewModel>>(response);
+        var dados = await Deserialize<List<CategoriaViewModel>>(response);
 
-        return carouselItems;
+        return dados;
     }
 
     public async Task<List<string>> ObterTodasTags()
     {
-        throw new NotImplementedException();
+        HttpResponseMessage response = await _httpClient.GetAsync("api/posts/tags");
+
+        var dados = await Deserialize<List<string>>(response);
+
+        return dados;
     }
 
     public async Task<List<PostRecenteViewModel>> ObterPostsRecentes()
     {
-        throw new NotImplementedException();
+        HttpResponseMessage response = await _httpClient.GetAsync($"api/posts/recentes/");
+
+        var posts = await Deserialize<List<PostRecenteViewModel>>(response);
+
+        return posts;
     }
 
     public async Task<PostsPorCategoriaViewModel> ObterPostsPorCategoria(int id)
@@ -63,16 +82,28 @@ public class BlogApiHttpClient : ServiceBase, IBlogApiHttpClient
 
     public async Task<List<PostViewModel>> ObterPostsPorTags(string tag)
     {
-        throw new NotImplementedException();
+        HttpResponseMessage response = await _httpClient.GetAsync($"api/posts/por-tag/{tag}");
+
+        var posts = await Deserialize<List<PostViewModel>>(response);
+
+        return posts;
     }
 
-    public Task<PostDetalhesViewModel> ObterDetalhesPost(int id)
+    public async Task<PostDetalhesViewModel> ObterDetalhesPost(int id)
     {
-        throw new NotImplementedException();
+        HttpResponseMessage response = await _httpClient.GetAsync($"api/posts/detalhes/{id}");
+
+        var post = await Deserialize<PostDetalhesViewModel>(response);
+
+        return post;
     }
 
-    public Task<List<PostPesquisaViewModel>> ObterPostsPorTermoPesquisa(string pesquisa)
+    public async Task<List<PostPesquisaViewModel>> ObterPostsPorTermoPesquisa(string pesquisa)
     {
-        throw new NotImplementedException();
+        HttpResponseMessage response = await _httpClient.GetAsync($"api/posts/pesquisa/{pesquisa}");
+
+        var posts = await Deserialize<List<PostPesquisaViewModel>>(response);
+
+        return posts;
     }
 }

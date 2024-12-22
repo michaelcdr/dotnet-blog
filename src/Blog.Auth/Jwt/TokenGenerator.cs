@@ -29,7 +29,7 @@ public class TokenGenerator : ITokenGenerator
 
         if (identityUser == null)
         {
-            _logger.LogWarning($"O usuario {userName} não foi encontrado.");
+            _logger.LogWarning($"O usuário {userName} não foi encontrado.");
             return null;
         }
 
@@ -37,7 +37,7 @@ public class TokenGenerator : ITokenGenerator
 
         if (userRoles == null || userRoles.Count == 0)
         {
-            _logger.LogWarning($"O usuario {userName} não contem roles.");
+            _logger.LogWarning($"O usuário {userName} não contem roles.");
             return null;
         }
 

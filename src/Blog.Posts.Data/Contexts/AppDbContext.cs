@@ -1,4 +1,4 @@
-﻿using Blog.Domain;
+﻿using Blog.Posts.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Data.Context;

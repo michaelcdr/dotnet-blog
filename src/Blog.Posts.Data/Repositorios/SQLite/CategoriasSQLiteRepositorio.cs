@@ -1,6 +1,6 @@
 ﻿using Blog.Data.Context;
-using Blog.Domain;
-using Blog.Domain.Repositories;
+using Blog.Posts.Domain;
+using Blog.Posts.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Data.Repositorios.SQLite;

@@ -1,8 +1,8 @@
-using Blog.Data.Context;
-using Blog.Domain;
-using Blog.Domain.Repositories;
+using Blog.Posts.Data.Context;
+using Blog.Posts.Domain;
+using Blog.Posts.Domain.Repositories;
 
-namespace Blog.Data.Repositorios.InMemory;
+namespace Blog.Posts.Data.Repositorios.InMemory;
 
 public class PostsRepositorio : IPostsRepositorio
 {
