@@ -28,18 +28,18 @@
                 <div class="card-body sys-articles-content">
                     <header>
                         <h1>
-                            <a asp-controller="Post" asp-action="Detalhes" asp-route-id="@Model.PostId" rel="bookmark">@Model.TituloPost</a>
+                            <a asp-controller="Post" asp-action="Detalhes" asp-route-id="@Model.Id" rel="bookmark">@Model.Titulo</a>
                         </h1>
                         <div class="article-details">
                             <span class="posted-on">
-                                <a asp-action="Detalhes" asp-controller="post" asp-route-id="@Model.PostId" rel="bookmark">
+                                <a asp-action="Detalhes" asp-controller="post" asp-route-id="@Model.Id" rel="bookmark">
                                     @Html.Raw(Model.DataECriadorPost)
                                 </a>
                             </span>   
                         </div>
                     </header>
                     <div class="article-img pb-3">
-                        <img src="~/img/artigos/@Model.Imagem" alt="@Model.TituloPost" title="@Model.TituloPost">
+                        <img src="~/img/artigos/@Model.Imagem" alt="@Model.Titulo" title="@Model.Titulo">
                     </div>
                     <div class="article-content">
                         @Html.Raw(Model.DescritivoPost)

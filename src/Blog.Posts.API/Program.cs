@@ -1,5 +1,6 @@
-using Blog.Data.Context;
+using Blog.Core.Bus;
 using Blog.Data.Repositorios.SQLite;
+using Blog.Posts.Data.Contexts.SQLite;
 using Blog.Posts.Domain;
 using Blog.Posts.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +15,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=app.db")
 );
-builder.Services.AddScoped<ICategoriasRepositorio, CategoriasSQLiteRepositorio>();
-builder.Services.AddScoped<IPostsRepositorio, PostsSQLiteRepositorio>();
+builder.Services.AddScoped<IMediatrHandler, MediatrHandler>();
+builder.Services.AddScoped<ICategoryRepository, CategoriasSQLiteRepositorio>();
+builder.Services.AddScoped<IPostRepository, PostsSQLiteRepositorio>();
 
 // in memory
 //builder.Services.AddTransient<IContexto, Contexto>();
@@ -57,13 +59,13 @@ async Task VerificarDBExiste(IServiceProvider services, ILogger logger)
 
     bool temBanco = await db.Database.EnsureCreatedAsync();
 
-    int qtdPendingMigrations = db.Database.GetPendingMigrations().Count();
+    //int qtdPendingMigrations = db.Database.GetPendingMigrations().Count();
 
-    if (qtdPendingMigrations > 0)
-    {
-        logger.LogInformation("Tem migrations pendentes atualizando");
-        await db.Database.MigrateAsync();
-    }
+    //if (qtdPendingMigrations > 0)
+    //{
+    //    logger.LogInformation("Tem migrations pendentes atualizando");
+    //    await db.Database.MigrateAsync();
+    //}
 
     if (!await db.Categorias.AnyAsync())
     {

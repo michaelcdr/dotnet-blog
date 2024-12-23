@@ -1,10 +1,10 @@
-using Blog.Posts.Data.Context;
+using Blog.Posts.Data.Contexts.InMemory;
 using Blog.Posts.Domain;
 using Blog.Posts.Domain.Repositories;
 
 namespace Blog.Posts.Data.Repositorios.InMemory;
 
-public class CategoriasRepositorio : ICategoriasRepositorio
+public class CategoriasRepositorio : ICategoryRepository
 {
     private List<Categoria> _dados = new();
    
@@ -17,6 +17,11 @@ public class CategoriasRepositorio : ICategoriasRepositorio
     public void Criar(Categoria categoria)
     {
         _dados.Add(categoria);
+    }
+
+    public async Task<Categoria?> GetByName(string categoria)
+    {
+        return  _dados.SingleOrDefault(e => e.Nome == categoria);
     }
 
     public async Task<Categoria> ObterPorId(int id)

@@ -1,11 +1,10 @@
-﻿using Blog.Data.Context;
+﻿using Blog.Posts.Data.Contexts.SQLite;
 using Blog.Posts.Domain;
 using Blog.Posts.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Data.Repositorios.SQLite;
 
-public class CategoriasSQLiteRepositorio : ICategoriasRepositorio
+public class CategoriasSQLiteRepositorio : ICategoryRepository
 {
     private readonly AppDbContext _contexto;
 
@@ -16,12 +15,12 @@ public class CategoriasSQLiteRepositorio : ICategoriasRepositorio
 
     public async Task<Categoria> ObterPorId(int id)
     {
-        return await _contexto.Categorias.SingleAsync(e => e.Id == id);
+        return _contexto.Categorias.Single(e => e.Id == id);
     }
 
     public async Task<List<Categoria>> ObterTodas()
     {
-        return await _contexto.Categorias.OrderBy(e => e.Nome).ToListAsync();
+        return _contexto.Categorias.OrderBy(e => e.Nome).ToList();
     }
 
     public void Criar(Categoria categoria)
@@ -31,6 +30,11 @@ public class CategoriasSQLiteRepositorio : ICategoriasRepositorio
 
     public async Task Salvar()
     {
-        await _contexto.SaveChangesAsync();
+        _contexto.SaveChanges();
+    }
+
+    public async Task<Categoria?> GetByName(string categoria)
+    {
+        return _contexto.Categorias.SingleOrDefault(e => e.Nome == categoria);
     }
 }

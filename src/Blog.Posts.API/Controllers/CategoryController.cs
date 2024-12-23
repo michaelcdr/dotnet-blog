@@ -1,5 +1,5 @@
-﻿using Blog.Data.Context;
-using Blog.Posts.API.DTOs;
+﻿using Blog.Posts.API.DTOs;
+using Blog.Posts.Data.Contexts.SQLite;
 using Blog.Posts.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,11 +21,8 @@ public class CategoryController : ControllerBase
     public async Task<IActionResult> Index()
     {
         var categorias = await _db.Categorias.AsNoTracking()
-            .Select(e => new CategoriaDTO
-            {
-                Id = e.Id,
-                Nome = e.Nome
-            }).ToListAsync();
+            .Select(e => new CategoriaDTO { Id = e.Id, Nome = e.Nome })
+            .ToListAsync();
         
         return Ok(categorias);
     }

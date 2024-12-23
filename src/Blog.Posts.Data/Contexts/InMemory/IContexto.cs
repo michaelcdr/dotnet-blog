@@ -1,6 +1,6 @@
 ﻿using Blog.Posts.Domain;
 
-namespace Blog.Posts.Data.Context;
+namespace Blog.Posts.Data.Contexts.InMemory;
 
 public interface IContexto
 {

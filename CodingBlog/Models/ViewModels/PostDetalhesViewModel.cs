@@ -6,9 +6,9 @@ public class PostDetalhesViewModel
                                  string dataECriadorPost, string descritivoPost, List<string> tags, string imagem)
     {
         CategoriaId = categoriaId;
-        PostId = postId;
+        Id = postId;
         CategoriaNome = categoriaNome;
-        TituloPost = tituloPost;
+        Titulo = tituloPost;
         DataECriadorPost = dataECriadorPost;
         DescritivoPost = descritivoPost;
         Tags = tags;
@@ -16,9 +16,9 @@ public class PostDetalhesViewModel
     }
 
     public int CategoriaId { get; set; }
-    public int PostId { get; set; }
+    public int Id { get; set; }
     public string CategoriaNome { get; set; }
-    public string TituloPost { get; set; }
+    public string Titulo { get; set; }
     public string DataECriadorPost { get; set; }
     public string DescritivoPost { get; set; }
     public List<string> Tags { get; set; }

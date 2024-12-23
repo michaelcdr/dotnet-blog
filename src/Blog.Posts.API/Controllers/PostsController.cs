@@ -1,10 +1,7 @@
-﻿using Blog.Data.Context;
-using Blog.Posts.API.DTOs;
-using Blog.Posts.Domain;
+﻿using Blog.Posts.API.DTOs;
+using Blog.Posts.Data.Contexts.SQLite;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Blog.Posts.API.Controllers
 {
@@ -14,20 +11,17 @@ namespace Blog.Posts.API.Controllers
     {
         private readonly AppDbContext _db;
 
-        public PostsController(AppDbContext appDb)
+        public PostsController(AppDbContext db)
         {
-            _db = appDb;
+            _db = db;
         }
         
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var posts = await _db.Posts.AsNoTracking().Select(e => new PostDTO
-            {
-                Id = e.Id,
-                Titulo = e.Titulo
-
-            }).ToListAsync();
+            var posts = await _db.Posts.AsNoTracking()
+                .Select(e => new PostDTO { Id = e.Id, Titulo = e.Titulo })
+                .ToListAsync();
 
             return Ok(posts);
         }
@@ -38,23 +32,11 @@ namespace Blog.Posts.API.Controllers
             return "value";
         }
 
-        // POST api/<PostsController>
         [HttpPost]
-        public void Post(Post post)
+        public async Task Post(PostDTO postDTO)
         {
-            _db.Posts.Add(post);
-        }
-
-        // PUT api/<PostsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<PostsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+     
+            await _db.SaveChangesAsync();
         }
     }
 }

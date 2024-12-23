@@ -1,15 +1,16 @@
+using Blog.Core.DomainObjects;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blog.Posts.Domain;
 
-public class Post
+public class Post : IAggregateRoot
 {
     public int Id { get; set; }
-    public string? Titulo { get; set; }
-    public string? Descritivo { get; set; }
-    public string? Imagem { get; set; }
-    public string? CriadoPor { get; set; }
-    public string? Tags { get; set; }
+    public string Titulo { get; set; } = string.Empty;
+    public string Descritivo { get; set; } = string.Empty;
+    public string Imagem { get; set; } = string.Empty;
+    public string CriadoPor { get; set; } = string.Empty;
+    public string Tags { get; set; } = string.Empty;
     public Categoria Categoria { get; set; }
     public int CategoriaId { get; set; }
     public DateTime CadastradoEm{ get; set; }
@@ -25,7 +26,7 @@ public class Post
 
     public Post(int id, string titulo, string descritivo, 
                 string imagem, string criadoPor, string tags,
-                int categoriaId, DateTime data)
+                int categoriaId, DateTime? data = null)
     {
         Id = id;
         Titulo = titulo;
@@ -34,13 +35,15 @@ public class Post
         CriadoPor = criadoPor;
         Tags = tags;
         CategoriaId = categoriaId;
-        CadastradoEm = data;
+        CadastradoEm = data ?? DateTime.Now;
         TagsItens = tags.Split(',').ToList();
         Categoria = new Categoria(categoriaId, string.Empty);
     }
     
     
-    public string ObterDataECriador() => $"Criado por <strong>{this.CriadoPor}</strong> em <strong>{CadastradoEm.ToString("dd.MM.yyyy")}</strong>";
+    public string ObterDataECriador() 
+        => $"Criado por <strong>{this.CriadoPor}</strong> em <strong>{CadastradoEm.ToString("dd.MM.yyyy")}</strong>";
+
     public string ObterPedacoDescritivo()
     {
         if (string.IsNullOrEmpty(this.Descritivo)) return string.Empty;
