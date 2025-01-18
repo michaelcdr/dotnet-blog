@@ -12,7 +12,7 @@ public class Categoria
         Posts = [];
     }
 
-    public Categoria(int id, string nome, List<Post>? posts = null)
+    public Categoria(int id, string? nome, List<Post>? posts = null)
     {
         Id = id;
         Posts = posts ?? new List<Post>();

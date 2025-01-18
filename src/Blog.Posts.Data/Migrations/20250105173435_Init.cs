@@ -17,7 +17,8 @@ namespace Blog.Posts.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: true)
+                    Nome = table.Column<string>(type: "TEXT", nullable: true),
+                    QtdPosts = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,11 +31,11 @@ namespace Blog.Posts.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Titulo = table.Column<string>(type: "TEXT", nullable: true),
-                    Descritivo = table.Column<string>(type: "TEXT", nullable: true),
+                    Titulo = table.Column<string>(type: "TEXT", nullable: false),
+                    Descritivo = table.Column<string>(type: "TEXT", nullable: false),
                     Imagem = table.Column<string>(type: "TEXT", nullable: true),
-                    CriadoPor = table.Column<string>(type: "TEXT", nullable: true),
-                    Tags = table.Column<string>(type: "TEXT", nullable: true),
+                    CriadoPor = table.Column<string>(type: "TEXT", nullable: false),
+                    Tags = table.Column<string>(type: "TEXT", nullable: false),
                     CategoriaId = table.Column<int>(type: "INTEGER", nullable: false),
                     CadastradoEm = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },

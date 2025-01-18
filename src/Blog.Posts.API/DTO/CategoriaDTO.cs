@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Blog.Posts.API.DTOs;
+namespace Blog.Posts.API.DTO;
 
 public class CategoriaDTO
 {

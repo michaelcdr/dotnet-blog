@@ -49,7 +49,6 @@ public static class IdentityConfig
     private static void AddJWTConfiguration(IServiceCollection services,
                                             IConfiguration configuration)
     {
-        // Configurando JWT
         var appSettingsSection = configuration.GetSection("JwtAppSettings");
         services.Configure<JwtAppSettings>(appSettingsSection);
 
