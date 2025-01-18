@@ -25,6 +25,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingBlog", "src\CodingBlo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{3AA8E318-4A25-4A70-A3EB-00874B49B45D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A023D9B0-366E-4739-AC53-D8371DFF93CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Tests.Stress", "Tests\Blog.Tests.Stress\Blog.Tests.Stress.csproj", "{53708E14-8D29-41E8-883D-87CC7F4F7D54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +59,10 @@ Global
 		{86BF0485-82DB-4D62-B135-D6AE2C523E1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86BF0485-82DB-4D62-B135-D6AE2C523E1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86BF0485-82DB-4D62-B135-D6AE2C523E1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53708E14-8D29-41E8-883D-87CC7F4F7D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53708E14-8D29-41E8-883D-87CC7F4F7D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53708E14-8D29-41E8-883D-87CC7F4F7D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53708E14-8D29-41E8-883D-87CC7F4F7D54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +76,7 @@ Global
 		{656D5A5F-7308-437D-9F19-C24AE9DB96DD} = {13A9105D-E0B6-4DEC-B85B-61AD1FC12572}
 		{75D9F39B-639C-4D3F-87E3-4C5D5865CEFC} = {13A9105D-E0B6-4DEC-B85B-61AD1FC12572}
 		{86BF0485-82DB-4D62-B135-D6AE2C523E1C} = {F22EECFC-5C58-4BCA-9AAE-C947665C51A3}
+		{53708E14-8D29-41E8-883D-87CC7F4F7D54} = {A023D9B0-366E-4739-AC53-D8371DFF93CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CDCAD366-F5A8-4916-AB8E-682BFCDF654E}

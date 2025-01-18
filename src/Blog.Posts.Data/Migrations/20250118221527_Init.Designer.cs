@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.Posts.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250105173435_Init")]
+    [Migration("20250118221527_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -43,6 +43,9 @@ namespace Blog.Posts.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AlteradoPor")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CadastradoEm")
                         .HasColumnType("TEXT");
 
@@ -51,6 +54,9 @@ namespace Blog.Posts.Data.Migrations
 
                     b.Property<string>("CriadoPor")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DataUltimaAlteracao")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Descritivo")

@@ -31,6 +31,7 @@ public class AppDbContext : DbContext, IUnitOfWork
         modelBuilder.Entity<Post>().HasKey(c => c.Id);
 
         modelBuilder.Entity<Post>().Property(c => c.Imagem).IsRequired(false);
+        modelBuilder.Entity<Post>().Property(c => c.AlteradoPor).IsRequired(false);
 
         modelBuilder.Entity<Post>()
             .HasOne(e => e.Categoria)

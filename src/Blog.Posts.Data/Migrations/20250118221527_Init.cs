@@ -37,7 +37,9 @@ namespace Blog.Posts.Data.Migrations
                     CriadoPor = table.Column<string>(type: "TEXT", nullable: false),
                     Tags = table.Column<string>(type: "TEXT", nullable: false),
                     CategoriaId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CadastradoEm = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    CadastradoEm = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    AlteradoPor = table.Column<string>(type: "TEXT", nullable: true),
+                    DataUltimaAlteracao = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

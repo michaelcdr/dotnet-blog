@@ -72,7 +72,7 @@ async Task VerificarDBExiste(IServiceProvider services, ILogger logger)
 
     if (!await db.Categorias.AnyAsync())
     {
-        var categoria = new Categoria(0, ".NET", new List<Post>
+        var categoria = new Categoria(0, "Dapper", new List<Post>
         {
             new Post(
                 0, 
@@ -90,7 +90,11 @@ async Task VerificarDBExiste(IServiceProvider services, ILogger logger)
                 "dignissim. Aenean at felis lacinia, malesuada ligula et, fringilla metus. Sed tincidunt placerat consectetur. " +
                 "Curabitur non nunc neque. Morbi consectetur eget mi eget tristique. Mauris cursus odio ut justo vulputate, " +
                 "non eleifend tellus dapibus. Mauris tincidunt orci at fermentum suscipit.", 
-                null, "Michael Costa dos Reis", "Dapper, .NET, Crud, C#", 0, DateTime.Now
+                null,
+                "Michael Costa dos Reis", 
+                "Dapper, .NET, Crud, C#", 
+                0, 
+                DateTime.Now
             ) 
         });
         

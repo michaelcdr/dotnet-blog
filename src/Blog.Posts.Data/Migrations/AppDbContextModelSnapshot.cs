@@ -40,6 +40,9 @@ namespace Blog.Posts.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AlteradoPor")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CadastradoEm")
                         .HasColumnType("TEXT");
 
@@ -48,6 +51,9 @@ namespace Blog.Posts.Data.Migrations
 
                     b.Property<string>("CriadoPor")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DataUltimaAlteracao")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Descritivo")

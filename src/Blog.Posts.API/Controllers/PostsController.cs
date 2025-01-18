@@ -69,23 +69,16 @@ public class PostsController : MainApiController
     {
         if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-        Categoria? cat = await _db.Categorias.SingleOrDefaultAsync(e => e.Nome == request.Categoria);
+        Categoria? cat = await _db.Categorias.AsNoTracking().SingleOrDefaultAsync(e => e.Nome == request.Categoria);
 
         if (cat == null)
         {
             AddError($"A categoria {request.Categoria} não foi encontrada.");
             return CustomResponse();
         }
-
-        var post = new Post(
-            0,
-            request.Titulo,
-            request.Descritivo,
-            request.Imagem,
-            "",
-            string.Join(",", request.Tags),
-            cat.Id
-        );
+        
+        string tags = string.Join(",", request.Tags);
+        var post = new Post(0, request.Titulo, request.Descritivo, request.Imagem, "", tags, cat.Id);
         _db.Posts.Add(post);
         await _db.SaveChangesAsync();
 

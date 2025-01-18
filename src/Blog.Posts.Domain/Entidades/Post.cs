@@ -22,7 +22,6 @@ public class Post : IAggregateRoot
     
     protected Post()
     {
-        Categoria = new Categoria(0,string.Empty);
         TagsItens = new List<string>();
     }
 
@@ -39,7 +38,6 @@ public class Post : IAggregateRoot
         CategoriaId = categoriaId;
         CadastradoEm = data ?? DateTime.Now;
         TagsItens = tags.Split(',').ToList();
-        Categoria = new Categoria(categoriaId, string.Empty);
     }
     
     public string ObterDataECriador() 
