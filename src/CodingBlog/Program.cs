@@ -1,11 +1,19 @@
+using Blog.Core.Services;
+using CodingBlog.Configuracoes;
 using CodingBlog.HttpClients;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
 builder.Services.AddHttpClient<IBlogApiHttpClient, BlogApiHttpClient>();
+builder.Services.AddScoped<ISerializerService, SerializerService>();
+
 builder.Services.AddHttpContextAccessor();
+builder.Configuration.AddUserSecrets<Program>();
+builder.Services.Configure<AppSettings>(builder.Configuration);
 
 var app = builder.Build();
  

@@ -17,6 +17,8 @@ public class BlogApiHttpClient : ServiceBase, IBlogApiHttpClient
                              ISerializerService serializerService,
                              IOptions<AppSettings> options) : base(serializerService)
     {
+        client.BaseAddress = new Uri(options.Value.UrlPostsApi);
+
         _httpClient = client;
     }
 
@@ -60,7 +62,7 @@ public class BlogApiHttpClient : ServiceBase, IBlogApiHttpClient
 
     public async Task<List<PostRecenteViewModel>> ObterPostsRecentes()
     {
-        HttpResponseMessage response = await _httpClient.GetAsync($"api/posts/recentes/");
+        HttpResponseMessage response = await _httpClient.GetAsync($"api/posts/recentes");
 
         var posts = await Deserialize<List<PostRecenteViewModel>>(response);
 
@@ -73,9 +75,9 @@ public class BlogApiHttpClient : ServiceBase, IBlogApiHttpClient
 
         var posts = await Deserialize<List<PostViewModel>>(response);
 
-        HttpResponseMessage categoriaResposta = await _httpClient.GetAsync($"api/categoria/{id}");
+        HttpResponseMessage categoriaResposta = await _httpClient.GetAsync($"api/categorias/{id}");
 
-        var categoria = await Deserialize<CategoriaViewModel>(response);
+        var categoria = await Deserialize<CategoriaViewModel>(categoriaResposta);
 
         return new PostsPorCategoriaViewModel(posts, categoria);
     }
@@ -89,20 +91,20 @@ public class BlogApiHttpClient : ServiceBase, IBlogApiHttpClient
         return posts;
     }
 
-    public async Task<PostDetalhesViewModel> ObterDetalhesPost(int id)
+    public async Task<PostViewModel> ObterDetalhesPost(int id)
     {
-        HttpResponseMessage response = await _httpClient.GetAsync($"api/posts/detalhes/{id}");
+        HttpResponseMessage response = await _httpClient.GetAsync($"api/posts/{id}");
 
-        var post = await Deserialize<PostDetalhesViewModel>(response);
+        var post = await Deserialize<PostViewModel>(response);
 
         return post;
     }
 
-    public async Task<List<PostPesquisaViewModel>> ObterPostsPorTermoPesquisa(string pesquisa)
+    public async Task<List<PostViewModel>> ObterPostsPorTermoPesquisa(string pesquisa)
     {
         HttpResponseMessage response = await _httpClient.GetAsync($"api/posts/pesquisa/{pesquisa}");
 
-        var posts = await Deserialize<List<PostPesquisaViewModel>>(response);
+        var posts = await Deserialize<List<PostViewModel>>(response);
 
         return posts;
     }

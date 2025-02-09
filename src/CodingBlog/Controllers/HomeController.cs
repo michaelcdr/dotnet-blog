@@ -17,9 +17,10 @@ public class HomeController : Controller
         _client = client; 
     }
 
-    public IActionResult Index()
-    {  
-        ViewBag.PostsRecentes = _client.ObterPostsRecentes();
+    public async Task<IActionResult> Index()
+    {
+        List<PostViewModel> posts = await _client.ObterPostsPorTermoPesquisa();
+        ViewBag.Posts = posts;
         return View();
     } 
 
