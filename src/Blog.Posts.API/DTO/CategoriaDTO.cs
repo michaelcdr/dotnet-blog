@@ -6,6 +6,7 @@ public class CategoriaDTO
 {
     public int Id { get; set; }
     
-    [Required]
     public string? Nome { get; set; }
+
+    public int QtdPosts { get; set; }
 }

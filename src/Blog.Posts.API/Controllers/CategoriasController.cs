@@ -10,11 +10,11 @@ namespace Blog.Posts.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CategoryController : MainApiController
+public class CategoriasController : MainApiController
 {
     private readonly AppDbContext _db;
 
-    public CategoryController(AppDbContext db)
+    public CategoriasController(AppDbContext db)
     {
         _db = db;
     }
@@ -29,10 +29,27 @@ public class CategoryController : MainApiController
         var categorias = await _db.Categorias.AsNoTracking()
             .Select(e => new CategoriaDTO { Id = e.Id, Nome = e.Nome })
             .ToListAsync();
-        
+
         return Ok(categorias);
     }
 
+    /// <summary>
+    /// Obtem categoria pelo id.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+        var categorias = await _db.Categorias.AsNoTracking()
+            .Where(e => e.Id == id)
+            .Select(e => new CategoriaDTO { Id = e.Id, Nome = e.Nome, QtdPosts = e.QtdPosts })
+            .SingleOrDefaultAsync();
+        
+        if(categorias == null) return NotFound();
+
+        return Ok(categorias);
+    }
+     
     /// <summary>
     /// Cadastrar uma nova categoria.
     /// </summary>

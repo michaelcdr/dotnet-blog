@@ -27,7 +27,7 @@
                 </div>
             </div> 
             <div class="lista-tags">
-                @foreach (var tag in post.Tags)
+                @foreach (var tag in post.ObterTags())
                 {
                     <a asp-action="PorTag" asp-controller="Post" asp-route-tag="@tag">@tag</a>
                 }

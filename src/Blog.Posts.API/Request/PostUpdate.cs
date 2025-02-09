@@ -2,8 +2,10 @@
 
 namespace Blog.Posts.API.Requests;
 
-public class PostCreate
+public class PostUpdate
 {
+    public int Id { get; set; }
+
     [Required(ErrorMessage = "Informe a Categoria")]
     public string Categoria { get; set; } = string.Empty;
 

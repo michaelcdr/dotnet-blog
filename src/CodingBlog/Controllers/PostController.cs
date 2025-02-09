@@ -33,7 +33,7 @@ public class PostController : Controller
 
     public async Task<IActionResult> Detalhes(int id)
     {
-        PostDetalhesViewModel model = await _client.ObterDetalhesPost(id);
+        PostViewModel model = await _client.ObterDetalhesPost(id);
         return View(model);
     }
 
@@ -41,7 +41,7 @@ public class PostController : Controller
     public async Task<IActionResult> Pesquisa(string pesquisa)
     {
         ViewBag.Pesquisa = pesquisa;
-        List<PostPesquisaViewModel> posts = await _client.ObterPostsPorTermoPesquisa(pesquisa);
+        List<PostViewModel> posts = await _client.ObterPostsPorTermoPesquisa(pesquisa);
         return View(posts);
     }
 }

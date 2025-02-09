@@ -1,4 +1,4 @@
-@model PostDetalhesViewModel
+@model PostViewModel
 @{
     ViewData["Title"] = "Detalhes do artigo";
 }
@@ -11,7 +11,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Categoria">Categorias</a></li> 
                 <li class="breadcrumb-item">
-                    <a asp-action="PorCategoria" asp-controller="Post" asp-route-id="@Model.CategoriaId">@Model.CategoriaNome</a>
+                    <a asp-action="PorCategoria" asp-controller="Post" asp-route-id="@Model.CategoriaId">@Model.Categoria</a>
                 </li>
                 <li class="breadcrumb-item active text-white" aria-current="page">Detalhes do Post</li>
             </ol>
@@ -33,7 +33,7 @@
                         <div class="article-details">
                             <span class="posted-on">
                                 <a asp-action="Detalhes" asp-controller="post" asp-route-id="@Model.Id" rel="bookmark">
-                                    @Html.Raw(Model.DataECriadorPost)
+                                    @Html.Raw(Model.DataECriador)
                                 </a>
                             </span>   
                         </div>
@@ -42,10 +42,10 @@
                         <img src="~/img/artigos/@Model.Imagem" alt="@Model.Titulo" title="@Model.Titulo">
                     </div>
                     <div class="article-content">
-                        @Html.Raw(Model.DescritivoPost)
+                        @Html.Raw(Model.Descritivo)
                     </div> 
                     <div class="lista-tags">
-                        @foreach (var tag in Model.Tags)
+                        @foreach (var tag in Model.ObterTags())
                         {
                             <a asp-action="PorTag" asp-controller="Post" asp-route-tag="@tag">@tag</a>
                         }
