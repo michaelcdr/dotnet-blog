@@ -1,6 +1,6 @@
 ﻿using CodingBlog.Models;
 
-namespace CodingBlog.HttpClients;
+namespace CodingBlog.Services;
 
 public interface IAuthHttpService
 {

@@ -1,4 +1,4 @@
-﻿using CodingBlog.HttpClients;
+﻿using CodingBlog.Services;
 using CodingBlog.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,9 +6,9 @@ namespace CodingBlog.ViewComponents.Carrossel;
 
 public class PostsRecentesViewComponent : ViewComponent
 {
-    private readonly IBlogApiHttpClient _client;
+    private readonly IBlogApiService _client;
 
-    public PostsRecentesViewComponent(IBlogApiHttpClient client)
+    public PostsRecentesViewComponent(IBlogApiService client)
     {
         _client = client;
     }

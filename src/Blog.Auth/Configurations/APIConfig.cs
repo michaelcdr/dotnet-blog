@@ -1,4 +1,6 @@
 ﻿using Blog.Auth.Jwt;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Blog.Auth.Configurations;
 
@@ -38,11 +40,32 @@ public static class APIConfig
             endpo.MapControllers();
         });
 
-        //using (var scope = app.ApplicationServices.CreateScope())
-        //{
-        //    var service = scope.ServiceProvider.GetRequiredService<ISeedService>();
-        //    service.Executar().GetAwaiter().GetResult();
-        //}
+        using (var scope = app.ApplicationServices.CreateScope())
+        {
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+
+            if (!roleManager.RoleExistsAsync("admin").GetAwaiter().GetResult())
+            {
+                var result = roleManager.CreateAsync(new IdentityRole("admin")).GetAwaiter().GetResult();
+            }
+
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            IdentityUser? user = userManager.FindByNameAsync("michael").GetAwaiter().GetResult();
+
+            if (user == null)
+            {
+                user = new IdentityUser("michael");
+                userManager.CreateAsync(user, "123456").GetAwaiter().GetResult();
+            }
+
+            var rolesUser = userManager.GetRolesAsync(user).GetAwaiter().GetResult();
+
+            if (!rolesUser.Any(e => e == "admin"))
+                userManager.AddToRoleAsync(user, "admin").GetAwaiter().GetResult() ;
+
+        }
         return app;
     }
 }

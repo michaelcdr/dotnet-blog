@@ -1,6 +1,6 @@
 using Blog.Core.Services;
 using CodingBlog.Configuracoes;
-using CodingBlog.HttpClients;
+using CodingBlog.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
-builder.Services.AddHttpClient<IBlogApiHttpClient, BlogApiHttpClient>();
+builder.Services.AddHttpClient<IBlogApiService, BlogApiService>();
 builder.Services.AddScoped<ISerializerService, SerializerService>();
 
 builder.Services.AddHttpContextAccessor();

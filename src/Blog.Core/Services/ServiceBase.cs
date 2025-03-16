@@ -2,25 +2,25 @@
 
 public abstract class ServiceBase
 {
-    private readonly ISerializerService _serializerService;
+    private readonly ISerializerService _serializadorService;
 
     protected ServiceBase(ISerializerService serializerService)
     {
-        _serializerService = serializerService;
+        _serializadorService = serializerService;
     }
 
-    protected virtual bool HandleResponseErrors(HttpResponseMessage response)
+    protected virtual bool ManipularResponseErrors(HttpResponseMessage response)
     {
-        return _serializerService.HandleResponseErrors(response);
+        return _serializadorService.HandleResponseErrors(response);
     }
 
-    protected virtual async Task<T> Deserialize<T>(HttpResponseMessage responseMessage)
+    protected virtual async Task<T> Deserializar<T>(HttpResponseMessage responseMessage)
     {
-        return await _serializerService.Deserialize<T>(responseMessage);
+        return await _serializadorService.Deserialize<T>(responseMessage);
     }
 
-    protected virtual StringContent FormatContent(object data)
+    protected virtual StringContent FormatarConteudo(object data)
     {
-        return _serializerService.FormatContent(data);
+        return _serializadorService.FormatContent(data);
     }
 }

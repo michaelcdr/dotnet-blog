@@ -1,8 +1,8 @@
 ﻿using CodingBlog.Models;
 
-namespace CodingBlog.HttpClients;
+namespace CodingBlog.Services;
 
-public interface IBlogApiHttpClient
+public interface IBlogApiService
 {
     Task CriarCategoria(CategoriaCadastroModel categoria);
     Task<CategoriaEdicaoModel> ObterCategoriaPorId(int id);

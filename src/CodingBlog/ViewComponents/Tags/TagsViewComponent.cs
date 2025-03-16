@@ -1,13 +1,13 @@
-﻿using CodingBlog.HttpClients;
+﻿using CodingBlog.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodingBlog.ViewComponents.Tags
 {
     public class TagsViewComponent : ViewComponent
     {
-        private readonly IBlogApiHttpClient _client;
+        private readonly IBlogApiService _client;
 
-        public TagsViewComponent(IBlogApiHttpClient client)
+        public TagsViewComponent(IBlogApiService client)
         {
             _client = client;
         }

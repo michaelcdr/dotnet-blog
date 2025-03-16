@@ -1,4 +1,4 @@
-﻿using CodingBlog.HttpClients;
+﻿using CodingBlog.Services;
 using CodingBlog.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,10 +8,10 @@ namespace CodingBlog.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly IBlogApiHttpClient _client;
+    private readonly IBlogApiService _client;
 
     public HomeController(ILogger<HomeController> logger,
-                          IBlogApiHttpClient client)
+                          IBlogApiService client)
     {
         _logger = logger;
         _client = client; 

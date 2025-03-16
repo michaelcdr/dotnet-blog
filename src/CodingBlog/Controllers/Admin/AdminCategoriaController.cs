@@ -1,4 +1,4 @@
-﻿using CodingBlog.HttpClients;
+﻿using CodingBlog.Services;
 using CodingBlog.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,9 +7,9 @@ namespace CodingBlog.Controllers.Admin;
 [Route("admin")]
 public class AdminCategoriaController : Controller
 {
-    private readonly IBlogApiHttpClient _client;
+    private readonly IBlogApiService _client;
 
-    public AdminCategoriaController(IBlogApiHttpClient client)
+    public AdminCategoriaController(IBlogApiService client)
     {
         _client = client;
     }

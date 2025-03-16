@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using Blog.Core.Services;
 using CodingBlog.Configuracoes;
 
-namespace CodingBlog.HttpClients;
+namespace CodingBlog.Services;
 
 public class AuthHttpService : ServiceBase, IAuthHttpService
 {
@@ -24,15 +24,15 @@ public class AuthHttpService : ServiceBase, IAuthHttpService
 
     public async Task<TokenResponse> Login(LoginModel loginModel)
     {
-        HttpResponseMessage response = await _httpClient.PostAsync("api/conta/login", FormatContent(loginModel));
+        HttpResponseMessage response = await _httpClient.PostAsync("api/conta/login", FormatarConteudo(loginModel));
 
-        if (!HandleResponseErrors(response))
+        if (!ManipularResponseErrors(response))
             return new TokenResponse
             {
-                ResponseResult = await Deserialize<ResponseResult>(response)
+                ResponseResult = await Deserializar<ResponseResult>(response)
             };
 
-        var result = await Deserialize<TokenResponse>(response);
+        var result = await Deserializar<TokenResponse>(response);
 
         if (result == null) throw new InvalidOperationException("Resultado inválido ao tentar logar.");
 

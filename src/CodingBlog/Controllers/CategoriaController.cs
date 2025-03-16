@@ -1,4 +1,4 @@
-﻿using CodingBlog.HttpClients;
+﻿using CodingBlog.Services;
 using CodingBlog.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,9 +6,9 @@ namespace CodingBlog.Controllers;
 
 public class CategoriaController : Controller
 {
-    private readonly IBlogApiHttpClient _client;
+    private readonly IBlogApiService _client;
 
-    public CategoriaController(IBlogApiHttpClient client)
+    public CategoriaController(IBlogApiService client)
     {
         _client = client;
     }

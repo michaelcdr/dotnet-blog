@@ -1,4 +1,4 @@
-﻿using CodingBlog.HttpClients;
+﻿using CodingBlog.Services;
 using CodingBlog.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,9 +6,9 @@ namespace CodingBlog.ViewComponents.Carrossel
 {
     public class CategoriasViewComponent : ViewComponent
     {
-        private readonly IBlogApiHttpClient _client; 
+        private readonly IBlogApiService _client; 
 
-        public CategoriasViewComponent(IBlogApiHttpClient categoriasRepositorios)
+        public CategoriasViewComponent(IBlogApiService categoriasRepositorios)
         {
             _client = categoriasRepositorios; 
         }
