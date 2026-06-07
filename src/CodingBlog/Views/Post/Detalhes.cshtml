@@ -38,9 +38,12 @@
                             </span>   
                         </div>
                     </header>
-                    <div class="article-img pb-3">
-                        <img src="~/img/artigos/@Model.Imagem" alt="@Model.Titulo" title="@Model.Titulo">
-                    </div>
+                    @if (!string.IsNullOrWhiteSpace(Model.Imagem))
+                    {
+                        <div class="article-img">
+                            <img src="~/img/artigos/@Model.Imagem" alt="@Model.Titulo" title="@Model.Titulo">
+                        </div>
+                    }
                     <div class="article-content">
                         @Html.Raw(Model.Descritivo)
                     </div> 
