@@ -2,7 +2,9 @@ using Blog.Core.Bus;
 using Blog.Data.Repositorios.SQLite;
 using Blog.Posts.Data.Contexts.SQLite;
 using Blog.Posts.Domain;
+using Blog.Posts.Domain.Events;
 using Blog.Posts.Domain.Repositories;
+using Blog.Posts.Domain.Services.CadastrarPost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -16,9 +18,13 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=app.db")
 );
+builder.Services.AddMediatR(config =>
+    config.RegisterServicesFromAssembly(typeof(UpdateQtdPostsCategoryEvent).Assembly));
+
 builder.Services.AddScoped<IMediatrHandler, MediatrHandler>();
 builder.Services.AddScoped<ICategoryRepository, CategoriasSQLiteRepositorio>();
 builder.Services.AddScoped<IPostRepository, PostsSQLiteRepositorio>();
+builder.Services.AddScoped<ICadastrarPost, CadastrarPost>();
 
 // in memory
 //builder.Services.AddTransient<IContexto, Contexto>();

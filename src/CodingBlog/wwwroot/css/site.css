@@ -507,3 +507,279 @@ footer {
         display: none;
     }
 }
+
+/* Layout: editorial
+   Troque VisualSettings:Layout para "editorial" para usar esta composição. */
+html[data-layout="editorial"] {
+    --primary-color: #ff3358;
+    --primary-strong: #ff6b7f;
+    --primary-soft: rgba(255, 51, 88, .14);
+    --bg-default: #08090d;
+    --bg-elevated: #101116;
+    --bg-muted: #181922;
+    --bg-navbar: rgba(8, 9, 13, .94);
+    --text-color: #f6f0f2;
+    --text-muted: #b4aeb8;
+    --text-subtle: #817783;
+    --border-color: rgba(255, 51, 88, .18);
+    --shadow-color: rgba(0, 0, 0, .42);
+    --editorial-red: #ff3358;
+    --editorial-red-dark: #9e1230;
+    --editorial-violet: #6d4aff;
+    --editorial-ink: #08090d;
+}
+
+html[data-layout="editorial"][data-theme="light"] {
+    --primary-color: #d9153d;
+    --primary-strong: #ef2e55;
+    --primary-soft: rgba(217, 21, 61, .1);
+    --bg-default: #f7f1f3;
+    --bg-elevated: #fffafa;
+    --bg-muted: #f1e8ec;
+    --bg-navbar: rgba(255, 250, 250, .94);
+    --text-color: #24151a;
+    --text-muted: #66555c;
+    --text-subtle: #8a747d;
+    --border-color: rgba(217, 21, 61, .16);
+    --shadow-color: rgba(63, 10, 24, .09);
+}
+
+html[data-layout="editorial"] body {
+    background:
+        radial-gradient(circle at top left, rgba(255, 51, 88, .18), transparent 26rem),
+        radial-gradient(circle at 80% 8%, rgba(109, 74, 255, .12), transparent 22rem),
+        linear-gradient(180deg, rgba(255, 51, 88, .06), transparent 420px),
+        var(--bg-default);
+}
+
+html[data-layout="editorial"] .navbar {
+    border-bottom-color: rgba(255, 51, 88, .22);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, .28);
+}
+
+html[data-layout="editorial"] .navbar-brand {
+    color: var(--text-color) !important;
+}
+
+html[data-layout="editorial"] .navbar-brand::after {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-left: .55rem;
+    border-radius: 999px;
+    background: var(--primary-color);
+    box-shadow: 0 0 16px var(--primary-color);
+}
+
+html[data-layout="editorial"] .nav-link.active,
+html[data-layout="editorial"] .nav-link:hover {
+    color: var(--primary-strong) !important;
+}
+
+html[data-layout="editorial"] .theme-toggle {
+    background: linear-gradient(145deg, rgba(255, 51, 88, .16), var(--bg-elevated));
+}
+
+html[data-layout="editorial"] #myCarousel,
+html[data-layout="editorial"] #myCarousel .carousel-inner,
+html[data-layout="editorial"] #myCarousel .carousel-item {
+    height: clamp(280px, 34vw, 380px);
+}
+
+html[data-layout="editorial"] #myCarousel {
+    margin-bottom: 1.4rem;
+    border-bottom: 1px solid rgba(255, 51, 88, .24);
+    box-shadow: 0 28px 60px rgba(0, 0, 0, .36);
+}
+
+html[data-layout="editorial"] #myCarousel .carousel-item::after {
+    background:
+        linear-gradient(90deg, rgba(8, 9, 13, .94), rgba(80, 10, 28, .46) 52%, rgba(8, 9, 13, .84)),
+        linear-gradient(0deg, rgba(8, 9, 13, .48), transparent 45%);
+}
+
+html[data-layout="editorial"][data-theme="light"] #myCarousel .carousel-item::after {
+    background:
+        linear-gradient(90deg, rgba(12, 18, 28, .78), rgba(12, 18, 28, .3) 58%, rgba(12, 18, 28, .62)),
+        linear-gradient(0deg, rgba(12, 18, 28, .28), transparent 45%);
+}
+
+html[data-layout="editorial"] #myCarousel .carousel-caption {
+    bottom: 18%;
+    width: min(1040px, calc(100% - 2rem));
+}
+
+html[data-layout="editorial"] .carousel-caption h3 {
+    max-width: 680px;
+    color: #fff;
+    font-size: clamp(2rem, 3.2vw, 3rem);
+    text-shadow: 0 12px 34px rgba(0, 0, 0, .58);
+}
+
+html[data-layout="editorial"] .carousel-caption p {
+    max-width: 540px;
+    color: rgba(255, 240, 244, .82);
+}
+
+html[data-layout="editorial"] .btn-primary {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--editorial-red-dark));
+    box-shadow: 0 14px 28px rgba(255, 51, 88, .24);
+}
+
+html[data-layout="editorial"] .btn-primary:hover,
+html[data-layout="editorial"] .btn-primary:active,
+html[data-layout="editorial"] .btn-primary:focus {
+    border-color: var(--primary-strong);
+    background: linear-gradient(135deg, var(--primary-strong), var(--primary-color));
+    color: #fff !important;
+}
+
+html[data-layout="editorial"] main > .container {
+    max-width: 1180px;
+}
+
+html[data-layout="editorial"] main > .container > .row {
+    align-items: flex-start;
+}
+
+html[data-layout="editorial"] main > .container > .row > .col-md-8 {
+    width: 70%;
+}
+
+html[data-layout="editorial"] main > .container > .row > .col-md-4 {
+    width: 30%;
+}
+
+html[data-layout="editorial"] article.card {
+    overflow: hidden;
+    border-left: 4px solid var(--primary-color);
+    background:
+        linear-gradient(145deg, rgba(255, 51, 88, .06), transparent 32%),
+        var(--bg-elevated);
+    box-shadow: 0 16px 34px var(--shadow-color);
+}
+
+html[data-layout="editorial"] article.card:hover {
+    transform: translateY(-2px);
+    transition: transform var(--ts-time), border-color var(--ts-time), box-shadow var(--ts-time);
+}
+
+html[data-layout="editorial"] .card-body.sys-articles-content {
+    min-height: 0;
+}
+
+html[data-layout="editorial"] .sys-articles-content header h1 {
+    max-width: 760px;
+    font-size: clamp(1.55rem, 2vw, 2rem);
+}
+
+html[data-layout="editorial"] .sys-articles-content header h1 a {
+    color: var(--text-color);
+}
+
+html[data-layout="editorial"] .sys-articles-content header h1 a:hover {
+    color: var(--primary-strong);
+}
+
+html[data-layout="editorial"] .posted-on {
+    margin-bottom: 1rem;
+}
+
+html[data-layout="editorial"] .article-img img {
+    max-height: 240px;
+    border-color: rgba(255, 51, 88, .2);
+}
+
+html[data-layout="editorial"] .article-content {
+    max-width: 760px;
+}
+
+html[data-layout="editorial"] .article-content .text-end {
+    margin-top: .85rem;
+}
+
+html[data-layout="editorial"] #pesquisa-desktop,
+html[data-layout="editorial"] main > .container > .row > .col-md-4 {
+    position: sticky;
+    top: 86px;
+}
+
+html[data-layout="editorial"] main > .container > .row > .col-md-4 .card {
+    border-color: rgba(255, 51, 88, .14);
+    background: rgba(16, 17, 22, .78);
+    box-shadow: none;
+}
+
+html[data-layout="editorial"][data-theme="light"] main > .container > .row > .col-md-4 .card {
+    background: rgba(255, 250, 250, .86);
+}
+
+html[data-layout="editorial"] main > .container > .row > .col-md-4 .card-body {
+    padding: 1rem;
+}
+
+html[data-layout="editorial"] main > .container > .row > .col-md-4 h3 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: var(--primary-strong);
+}
+
+html[data-layout="editorial"] main > .container > .row > .col-md-4 .list-group-item {
+    padding: .65rem .75rem;
+    background: transparent;
+}
+
+html[data-layout="editorial"] .lista-tags > a {
+    min-height: 28px;
+    border-color: rgba(255, 51, 88, .32);
+    background: rgba(255, 51, 88, .1);
+    color: var(--primary-strong);
+}
+
+html[data-layout="editorial"] article .lista-tags > a {
+    border-color: rgba(255, 51, 88, .24);
+    background: rgba(255, 51, 88, .08);
+    color: var(--primary-strong);
+}
+
+html[data-layout="editorial"] .lista-tags > a:hover,
+html[data-layout="editorial"] article .lista-tags > a:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: #fff;
+}
+
+html[data-layout="editorial"] .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 .2rem rgba(255, 51, 88, .16);
+}
+
+html[data-layout="editorial"] .badge.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+@media (max-width: 990px) {
+    html[data-layout="editorial"] main > .container > .row > .col-md-8,
+    html[data-layout="editorial"] main > .container > .row > .col-md-4 {
+        width: 100%;
+    }
+
+    html[data-layout="editorial"] #pesquisa-desktop,
+    html[data-layout="editorial"] main > .container > .row > .col-md-4 {
+        position: static;
+    }
+}
+
+@media (max-width: 767px) {
+    html[data-layout="editorial"] #myCarousel,
+    html[data-layout="editorial"] #myCarousel .carousel-inner,
+    html[data-layout="editorial"] #myCarousel .carousel-item {
+        height: 300px;
+    }
+
+    html[data-layout="editorial"] article.card {
+        border-left-width: 3px;
+    }
+}

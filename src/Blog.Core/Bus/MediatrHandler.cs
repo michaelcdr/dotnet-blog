@@ -1,12 +1,20 @@
-﻿using Blog.Core.Messages;
+using Blog.Core.Messages;
+using MediatR;
 
 namespace Blog.Core.Bus
 {
     public class MediatrHandler : IMediatrHandler
     {
+        private readonly IMediator _mediator;
+
+        public MediatrHandler(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         public async Task PublishEvent(Event evento)
         {
-            throw new NotImplementedException();
+            await _mediator.Publish(evento);
         }
     }
 

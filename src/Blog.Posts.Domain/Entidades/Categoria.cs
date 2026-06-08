@@ -19,4 +19,9 @@ public class Categoria
         Nome = nome;
         QtdPosts = posts == null ? 0 : posts.Count;
     }
+
+    public void IncrementarQtdPosts()
+    {
+        QtdPosts++;
+    }
 }

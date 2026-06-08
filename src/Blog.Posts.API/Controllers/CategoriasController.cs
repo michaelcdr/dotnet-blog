@@ -27,7 +27,7 @@ public class CategoriasController : MainApiController
     public async Task<IActionResult> Get()
     {
         var categorias = await _db.Categorias.AsNoTracking()
-            .Select(e => new CategoriaDTO { Id = e.Id, Nome = e.Nome })
+            .Select(e => new CategoriaDTO { Id = e.Id, Nome = e.Nome, QtdPosts = e.QtdPosts })
             .ToListAsync();
 
         return Ok(categorias);

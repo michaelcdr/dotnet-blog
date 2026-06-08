@@ -3,6 +3,7 @@ using Blog.Posts.API.DTO;
 using Blog.Posts.API.Requests;
 using Blog.Posts.Data.Contexts.SQLite;
 using Blog.Posts.Domain;
+using Blog.Posts.Domain.Services.CadastrarPost;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,10 +14,12 @@ namespace Blog.Posts.API.Controllers;
 public class PostsController : MainApiController
 {
     private readonly AppDbContext _db;
+    private readonly ICadastrarPost _postService;
 
-    public PostsController(AppDbContext db)
+    public PostsController(AppDbContext db, ICadastrarPost postService)
     {
         _db = db;
+        _postService = postService; 
     }
 
     /// <summary>
@@ -197,22 +200,26 @@ public class PostsController : MainApiController
     {
         if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-        Categoria? cat = await _db.Categorias.AsNoTracking().SingleOrDefaultAsync(e => e.Nome == request.Categoria);
+        var tagsList = request.Tags.Split(",").Select(e => e.Trim()).ToList();
+        await _postService.Executar(request.Titulo, request.Categoria, request.Descritivo, tagsList, request.Imagem);
+        return Created();
+        //Categoria? cat = await _db.Categorias.AsNoTracking().SingleOrDefaultAsync(e => e.Nome == request.Categoria);
 
-        if (cat == null)
-        {
-            AddError($"A categoria {request.Categoria} não foi encontrada.");
-            return CustomResponse();
-        }
+        //if (cat == null)
+        //{
+        //    AddError($"A categoria {request.Categoria} não foi encontrada.");
+        //    return CustomResponse();
+        //}
         
-        string tags = string.Join(",", request.Tags);
-        var post = new Post(0, request.Titulo, request.Descritivo, request.Imagem, "", tags, cat.Id);
-        _db.Posts.Add(post);
-        await _db.SaveChangesAsync();
+        //string tags = string.Join(",", request.Tags);
+        //var post = new Post(0, request.Titulo, request.Descritivo, request.Imagem, "", tags, cat.Id);
+        //_db.Posts.Add(post);
+        //await _db.SaveChangesAsync();
 
-        var postDTO = new PostResultado(post);
+        //var postDTO = new PostResultado(post);
 
-        return CreatedAtAction(nameof(Get), postDTO, request);
+        //return CreatedAtAction(nameof(Get), postDTO, request);
+
     }
 
     /// <summary>
