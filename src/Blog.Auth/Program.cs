@@ -2,6 +2,10 @@ using Blog.Auth.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
 builder.Services
     .AddIdentityConfig(builder.Configuration)
     .AddAPIConfig(builder.Configuration, builder.Environment)

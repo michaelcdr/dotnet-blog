@@ -4,5 +4,5 @@ namespace CodingBlog.Services;
 
 public interface IAuthHttpService
 {
-    Task<TokenResponse> Login(LoginModel loginModel);
+    Task<TokenResponse> Login(LoginModel loginModel, CancellationToken cancellationToken);
 }

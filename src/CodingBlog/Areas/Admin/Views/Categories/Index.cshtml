@@ -1,0 +1,77 @@
+@{
+    ViewData["Title"] = "Categorias";
+}
+
+<div class="d-flex justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <h1 class="h3 mb-1">Categorias</h1>
+        <p class="text-muted mb-0">Busque, edite e reorganize a taxonomia do blog.</p>
+    </div>
+    <a class="btn btn-primary" asp-action="Create">Nova categoria</a>
+</div>
+
+<section class="admin-panel">
+    <div class="admin-toolbar">
+        <input id="category-search" class="form-control" type="search" placeholder="Buscar categoria" />
+        <select id="category-page-size" class="form-select">
+            <option value="10">10 por página</option>
+            <option value="25">25 por página</option>
+            <option value="50">50 por página</option>
+        </select>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table admin-table" id="categories-table">
+            <thead>
+                <tr>
+                    <th data-sort="nome">Nome</th>
+                    <th data-sort="qtdposts" class="text-end">Posts</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="admin-table-footer">
+        <div id="categories-summary" class="text-muted small"></div>
+        <div id="categories-pagination" class="admin-pagination"></div>
+    </div>
+</section>
+
+@section Scripts {
+<script>
+    const editCategoryUrlTemplate = '@Url.Action("Edit", "Categories", new { area = "Admin", id = "__id__" })';
+    const deleteCategoryUrlTemplate = '@Url.Action("Delete", "Categories", new { area = "Admin", id = "__id__" })';
+
+    createAdminGrid({
+        endpoint: '@Url.Action("Grid", "Categories", new { area = "Admin" })',
+        searchInput: '#category-search',
+        pageSizeInput: '#category-page-size',
+        tableSelector: '#categories-table',
+        tbodyRenderer: function (items) {
+            if (!items.length) {
+                return '<tr><td colspan="3" class="text-center text-muted py-4">Nenhuma categoria encontrada.</td></tr>';
+            }
+
+            return items.map(function (item) {
+                return `
+                    <tr>
+                        <td>${escapeHtml(item.nome)}</td>
+                        <td class="text-end">${item.qtdPosts}</td>
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-2">
+                                <a class="btn btn-sm btn-outline-primary" href="${editCategoryUrlTemplate.replace('__id__', item.id)}">Editar</a>
+                                <a class="btn btn-sm btn-outline-danger" href="${deleteCategoryUrlTemplate.replace('__id__', item.id)}">Excluir</a>
+                            </div>
+                        </td>
+                    </tr>`;
+            }).join('');
+        },
+        summarySelector: '#categories-summary',
+        paginationSelector: '#categories-pagination',
+        defaultSortBy: 'nome',
+        defaultSortDirection: 'asc'
+    });
+</script>
+}

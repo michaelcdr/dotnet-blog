@@ -1,0 +1,25 @@
+﻿@model IPagedResult
+@if (Model != null && Model.TotalPages > 1)
+{
+    var path = ViewContext.HttpContext.Request.Path.Value;
+    var queryName = "page";
+    var previousPage = Model.Page - 1;
+    var nextPage = Model.Page + 1;
+
+    <nav aria-label="Paginas" class="d-flex justify-content-center my-4">
+        <ul class="pagination">
+            <li class="page-item @(Model.Page <= 1 ? "disabled" : "")">
+                <a class="page-link" href="@(Model.Page <= 1 ? "#" : path + "?" + queryName + "=" + previousPage)">Anterior</a>
+            </li>
+            @for (var currentPage = 1; currentPage <= Model.TotalPages; currentPage++)
+            {
+                <li class="page-item @(currentPage == Model.Page ? "active" : "")">
+                    <a class="page-link" href="@(path + "?" + queryName + "=" + currentPage)">@currentPage</a>
+                </li>
+            }
+            <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="@(Model.Page >= Model.TotalPages ? "#" : path + "?" + queryName + "=" + nextPage)">Proxima</a>
+            </li>
+        </ul>
+    </nav>
+}

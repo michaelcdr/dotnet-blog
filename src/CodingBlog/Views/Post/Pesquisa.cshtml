@@ -1,4 +1,4 @@
-﻿@model List<PostViewModel>
+﻿@model PagedResult<PostViewModel>
 @{
     ViewData["Title"] = "Lista de posts por tag";
 }
@@ -13,12 +13,12 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h2 class="mb-0">
-                        <strong>@Model.Count()</strong> Resultados encontrados para <strong>@ViewBag.Pesquisa</strong>
+                        <strong>@Model.TotalItems</strong> Resultados encontrados para <strong>@ViewBag.Pesquisa</strong>
                     </h2>
                 </div>
             </div>
 
-            @foreach (var post in Model)
+            @foreach (var post in Model.Items)
             {
                 <article class="card mb-3">
                     <div class="card-body sys-articles-content">
@@ -31,7 +31,7 @@
                                     <a asp-action="Detalhes" asp-controller="post" asp-route-id="@post.Id" rel="bookmark">
                                         @Html.Raw(post.DataECriador)
                                     </a>
-                                </span>   
+                                </span>
                             </div>
                         </header>
                         @if (!string.IsNullOrWhiteSpace(post.Imagem))
@@ -41,11 +41,11 @@
                             </div>
                         }
                         <div class="article-content">
-                            @Html.Raw(post.Descritivo)
+                            @Html.Raw(CodingBlog.Services.MarkdownRenderer.ToHtml(post.Descritivo))
                             <div class="text-end">
                                 <a class="btn btn-primary" asp-action="Detalhes" asp-controller="post" asp-route-id="@post.Id">Continue lendo</a>
                             </div>
-                        </div> 
+                        </div>
                         <div class="lista-tags">
                             @foreach (var tag in post.ObterTags())
                             {
@@ -55,13 +55,14 @@
                     </div>
                 </article>
             }
+            <partial name="~/Views/Shared/_Pagination.cshtml" model="Model" />
         </div>
         <div class="col-md-4 col-sm-12 col-xs-12">
             <partial name="~/Views/Post/PesquisaDesktop.cshtml"   />
 
             <vc:categorias></vc:categorias>
             <vc:tags></vc:tags>
-            <vc:posts-recentes></vc:posts-recentes> 
+            <vc:posts-recentes></vc:posts-recentes>
         </div>
     </div>
 </div>

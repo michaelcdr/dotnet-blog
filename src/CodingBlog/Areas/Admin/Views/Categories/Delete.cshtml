@@ -1,0 +1,52 @@
+@model CodingBlog.Models.Admin.AdminCategoryDeleteViewModel
+@{
+    ViewData["Title"] = "Excluir categoria";
+}
+
+<div class="d-flex justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <h1 class="h3 mb-1">Excluir categoria</h1>
+        <p class="text-muted mb-0">Confira o impacto antes de remover a categoria.</p>
+    </div>
+    <a class="btn btn-outline-primary" asp-action="Index">Voltar</a>
+</div>
+
+<section class="admin-form-shell">
+    <form method="post" class="card">
+        <div class="card-body">
+            @Html.AntiForgeryToken()
+            <input asp-for="Id" type="hidden" />
+            <input asp-for="Nome" type="hidden" />
+            <input asp-for="QtdPosts" type="hidden" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <p class="mb-1"><strong>Categoria:</strong> @Model.Nome</p>
+            <p class="text-muted mb-4">Posts vinculados: @Model.QtdPosts</p>
+
+            @if (Model.QtdPosts > 0)
+            {
+                <div class="mb-3">
+                    <label asp-for="DestinationCategoryId" class="form-label">Mover posts para</label>
+                    <select asp-for="DestinationCategoryId" class="form-select">
+                        <option value="">Selecione uma categoria</option>
+                        @foreach (var category in Model.AvailableCategories)
+                        {
+                            <option value="@category.Id">@category.Nome</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="NewCategoryName" class="form-label">Ou criar uma nova categoria</label>
+                    <input asp-for="NewCategoryName" class="form-control" placeholder="Nome da nova categoria" />
+                </div>
+            }
+
+            <div class="d-flex justify-content-end gap-2">
+                <a class="btn btn-outline-primary" asp-action="Index">Cancelar</a>
+                <button type="submit" class="btn btn-danger">Excluir categoria</button>
+            </div>
+        </div>
+    </form>
+</section>

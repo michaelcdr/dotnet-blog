@@ -1,69 +1,68 @@
-﻿using CodingBlog.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using System.Security.Claims;
-using Microsoft.Extensions.Options;
 using Blog.Core.Services;
-using CodingBlog.Configuracoes;
+using CodingBlog.Models;
 
 namespace CodingBlog.Services;
 
 public class AuthHttpService : ServiceBase, IAuthHttpService
 {
     private readonly HttpClient _httpClient;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly ISerializerService _serializerService;
+    private readonly ILogger<AuthHttpService> _logger;
 
-    public AuthHttpService(HttpClient client,
-                           IHttpContextAccessor httpContextAccessor,
-                           ISerializerService serializerService,
-                           IOptions<AppSettings> options) : base(serializerService)
+    public AuthHttpService(
+        HttpClient client,
+        ISerializerService serializerService,
+        ILogger<AuthHttpService> logger) : base(serializerService)
     {
         _httpClient = client;
+        _logger = logger;
     }
 
-    public async Task<TokenResponse> Login(LoginModel loginModel)
+    public async Task<TokenResponse> Login(LoginModel loginModel, CancellationToken cancellationToken)
     {
-        HttpResponseMessage response = await _httpClient.PostAsync("api/conta/login", FormatarConteudo(loginModel));
+        try
+        {
+            var response = await _httpClient.PostAsync("api/conta/login", FormatarConteudo(loginModel), cancellationToken);
 
-        if (!ManipularResponseErrors(response))
-            return new TokenResponse
+            if (!ManipularResponseErrors(response))
             {
-                ResponseResult = await Deserializar<ResponseResult>(response)
-            };
+                _logger.LogWarning("Falha de autenticacao para o usuario {UserName}: credenciais invalidas ou validacao recusada.", loginModel.UserName);
+                return BuildLoginError("Usuario ou senha invalidos.");
+            }
 
-        var result = await Deserializar<TokenResponse>(response);
-
-        if (result == null) throw new InvalidOperationException("Resultado inválido ao tentar logar.");
-
-        await AutenticarRegistrandoClaims(result);
-
-        return result;
+            return await Deserializar<TokenResponse>(response);
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            throw;
+        }
+        catch (HttpRequestException ex)
+        {
+            _logger.LogError(ex, "Falha ao comunicar com a API de autenticacao.");
+            return BuildLoginError("Nao foi possivel autenticar agora. Tente novamente em instantes.");
+        }
+        catch (TaskCanceledException ex)
+        {
+            _logger.LogError(ex, "Tempo esgotado ao comunicar com a API de autenticacao.");
+            return BuildLoginError("Nao foi possivel autenticar agora. Tente novamente em instantes.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro inesperado ao autenticar o usuario {UserName}.", loginModel.UserName);
+            return BuildLoginError("Nao foi possivel autenticar agora. Tente novamente em instantes.");
+        }
     }
 
-    private async Task AutenticarRegistrandoClaims(TokenResponse tokenResult)
+    private static TokenResponse BuildLoginError(string message)
     {
-        var claims = new List<Claim>
+        return new TokenResponse
         {
-            new Claim("JWT", tokenResult.AccessToken)
+            ResponseResult = new ResponseResult
+            {
+                Errors = new ResponseErrorMessages
+                {
+                    Mensagens = [message]
+                }
+            }
         };
-        claims.AddRange(tokenResult.UserToken.Claims.Select(e => new Claim(e.Type, e.Value)).ToList());
-
-        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-        var authProp = new AuthenticationProperties
-        {
-            IssuedUtc = DateTime.UtcNow,
-            ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(60),
-            IsPersistent = true
-        };
-
-        await _httpContextAccessor.HttpContext.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            claimsPrincipal,
-            authProp
-        );
     }
 }

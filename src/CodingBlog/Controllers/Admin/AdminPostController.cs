@@ -1,4 +1,3 @@
-﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodingBlog.Controllers.Admin;
@@ -7,77 +6,51 @@ namespace CodingBlog.Controllers.Admin;
 public class AdminPostController : Controller
 {
     [Route("post")]
-    public ActionResult Index()
+    public IActionResult Index()
     {
-        return View();
+        return RedirectToAction("Index", "Posts", new { area = "Admin" });
     }
 
     [Route("post/detalhes/{id}")]
-    public ActionResult Details(int id)
+    public IActionResult Details(int id)
     {
-        return View();
+        return RedirectToAction("Edit", "Posts", new { area = "Admin", id });
     }
 
     [Route("post/create")]
-    public ActionResult Create()
+    public IActionResult Create()
     {
-        return View();
+        return RedirectToAction("Create", "Posts", new { area = "Admin" });
     }
 
-    // POST: PostController/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create(IFormCollection collection)
+    public IActionResult Create(IFormCollection collection)
     {
-        try
-        {
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View();
-        }
+        return RedirectToAction("Create", "Posts", new { area = "Admin" });
     }
 
-    // GET: PostController/Edit/5
-    public ActionResult Edit(int id)
+    public IActionResult Edit(int id)
     {
-        return View();
+        return RedirectToAction("Edit", "Posts", new { area = "Admin", id });
     }
 
-    // POST: PostController/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, IFormCollection collection)
+    public IActionResult Edit(int id, IFormCollection collection)
     {
-        try
-        {
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View();
-        }
+        return RedirectToAction("Edit", "Posts", new { area = "Admin", id });
     }
 
-    // GET: PostController/Delete/5
-    public ActionResult Delete(int id)
+    public IActionResult Delete(int id)
     {
-        return View();
+        return RedirectToAction("Index", "Posts", new { area = "Admin" });
     }
 
-    // POST: PostController/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id, IFormCollection collection)
+    public IActionResult Delete(int id, IFormCollection collection)
     {
-        try
-        {
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View();
-        }
+        return RedirectToAction("Index", "Posts", new { area = "Admin" });
     }
 }

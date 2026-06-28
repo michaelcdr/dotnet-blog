@@ -1,17 +1,15 @@
-using CodingBlog.Models;
+﻿namespace CodingBlog.Models;
 
-namespace CodingBlog.Models
+public class PostsPorCategoriaViewModel
 {
-    public class PostsPorCategoriaViewModel
+    public PostsPorCategoriaViewModel(PagedResult<PostViewModel> posts, CategoriaViewModel categoria)
     {
-        public PostsPorCategoriaViewModel(List<PostViewModel> posts,
-                                          CategoriaViewModel categoria)
-        {
-            Posts = posts; 
-            Categoria = categoria;
-        }
-
-        public List<PostViewModel> Posts { get; }
-        public CategoriaViewModel Categoria { get; set; }
+        Posts = posts.Items;
+        Paginacao = posts;
+        Categoria = categoria;
     }
-} 
+
+    public List<PostViewModel> Posts { get; }
+    public PagedResult<PostViewModel> Paginacao { get; }
+    public CategoriaViewModel Categoria { get; set; }
+}

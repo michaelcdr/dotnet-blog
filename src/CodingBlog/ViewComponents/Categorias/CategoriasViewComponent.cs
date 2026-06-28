@@ -15,8 +15,8 @@ namespace CodingBlog.ViewComponents.Carrossel
 
         public async Task<IViewComponentResult> InvokeAsync() 
         {
-            List<CategoriaViewModel> categorias = await _client.ObterCategorias();
-            return View(categorias);
+            PagedResult<CategoriaViewModel> categorias = await _client.ObterCategorias(pageSize: 50);
+            return View(categorias.Items);
         }
     }
 } 

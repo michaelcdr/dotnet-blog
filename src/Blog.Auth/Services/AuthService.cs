@@ -27,7 +27,7 @@ public class AuthService : IAuthService
         _tokenGenerator = tokenGenerator;
     }
 
-    public async Task<AppResponse<TokenGeneratedResponse>> Login(UserLogin request)
+    public async Task<AppResponse<TokenGeneratedResponse>> Login(UserLogin request, CancellationToken cancellationToken = default)
     {
         var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, false, true);
 

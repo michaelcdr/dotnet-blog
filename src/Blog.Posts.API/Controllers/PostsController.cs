@@ -1,11 +1,20 @@
-﻿using Blog.Core.Controller;
-using Blog.Posts.API.DTO;
-using Blog.Posts.API.Requests;
-using Blog.Posts.Data.Contexts.SQLite;
-using Blog.Posts.Domain;
-using Blog.Posts.Domain.Services.CadastrarPost;
+using Blog.Core.Controller;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using AdminListPosts = Blog.Posts.API.Features.Posts.AdminListPosts;
+using CreateAdminPost = Blog.Posts.API.Features.Posts.CreateAdminPost;
+using CreatePost = Blog.Posts.API.Features.Posts.CreatePost;
+using DeletePost = Blog.Posts.API.Features.Posts.DeletePost;
+using GetAdminPostById = Blog.Posts.API.Features.Posts.GetAdminPostById;
+using GetPostById = Blog.Posts.API.Features.Posts.GetPostById;
+using ListPosts = Blog.Posts.API.Features.Posts.ListPosts;
+using ListPostsByCategory = Blog.Posts.API.Features.Posts.ListPostsByCategory;
+using ListPostsByTag = Blog.Posts.API.Features.Posts.ListPostsByTag;
+using ListRecentPosts = Blog.Posts.API.Features.Posts.ListRecentPosts;
+using ListTags = Blog.Posts.API.Features.Posts.ListTags;
+using SearchPosts = Blog.Posts.API.Features.Posts.SearchPosts;
+using UpdateAdminPost = Blog.Posts.API.Features.Posts.UpdateAdminPost;
+using UpdatePost = Blog.Posts.API.Features.Posts.UpdatePost;
 
 namespace Blog.Posts.API.Controllers;
 
@@ -13,251 +22,214 @@ namespace Blog.Posts.API.Controllers;
 [ApiController]
 public class PostsController : MainApiController
 {
-    private readonly AppDbContext _db;
-    private readonly ICadastrarPost _postService;
-
-    public PostsController(AppDbContext db, ICadastrarPost postService)
-    {
-        _db = db;
-        _postService = postService; 
-    }
-
-    /// <summary>
-    /// Obtem todos posts
-    /// </summary>
-    /// <returns>Obtem todos posts</returns>
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(
+        [FromServices] ListPosts.Handler handler,
+        [FromQuery] ListPosts.Request request,
+        CancellationToken cancellationToken)
     {
-        IQueryable<Post> postsQuery = _db.Posts.AsNoTracking();
-
-        var posts = await postsQuery
-                        .Select(e => new PostResultado
-                        {
-                            Id = e.Id,
-                            Titulo = e.Titulo,
-                            Descritivo = e.Descritivo,
-                            Imagem = e.Imagem,
-                            Tags = e.Tags,
-                            Categoria = e.Categoria.Nome,
-                            CategoriaId = e.CategoriaId
-                        })
-            .ToListAsync();
-
+        var posts = await handler.Handle(request, cancellationToken);
         return Ok(posts);
     }
 
-    /// <summary>
-    /// Obtem todos posts
-    /// </summary>
-    /// <returns>Obtem todos posts</returns>
     [HttpGet("pesquisa/{pesquisa?}")]
-    public async Task<IActionResult> Pesquisa([FromRoute] string? pesquisa)
+    public async Task<IActionResult> Pesquisa(
+        [FromServices] SearchPosts.Handler handler,
+        [FromRoute] string? pesquisa,
+        [FromQuery] SearchPosts.Request request,
+        CancellationToken cancellationToken)
     {
-        IQueryable<Post> postsQuery = _db.Posts.AsNoTracking();
-
-        if (!string.IsNullOrEmpty(pesquisa))
-            postsQuery = postsQuery.Where(e => e.Titulo.Contains(pesquisa) || e.Tags.Contains(pesquisa) || e.Descritivo.Contains(pesquisa));
-
-        var posts = await postsQuery
-                        .Select(e => new PostResultado
-                        {
-                            Id = e.Id,
-                            Titulo = e.Titulo,
-                            Descritivo = e.Descritivo,
-                            Imagem = e.Imagem,
-                            Tags = e.Tags,
-                            Categoria = e.Categoria.Nome,
-                            CategoriaId = e.CategoriaId
-                        })
-            .ToListAsync();
-
+        request.Pesquisa = pesquisa;
+        var posts = await handler.Handle(request, cancellationToken);
         return Ok(posts);
     }
 
     [HttpGet("por-tag/{tag?}")]
-    public async Task<IActionResult> ObterPorTag([FromRoute] string? tag)
+    public async Task<IActionResult> ObterPorTag(
+        [FromServices] ListPostsByTag.Handler handler,
+        [FromRoute] string? tag,
+        [FromQuery] ListPostsByTag.Request request,
+        CancellationToken cancellationToken)
     {
-        IQueryable<Post> postsQuery = _db.Posts.AsNoTracking();
-
-        if (!string.IsNullOrEmpty(tag))
-            postsQuery = postsQuery.Where(e => e.Tags.Contains(tag));
-
-        var posts = await postsQuery
-                        .Select(e => new PostResultado
-                        {
-                            Id = e.Id,
-                            Titulo = e.Titulo,
-                            Descritivo = e.Descritivo,
-                            Imagem = e.Imagem,
-                            Tags = e.Tags,
-                            Categoria = e.Categoria.Nome,
-                            CategoriaId = e.CategoriaId
-                        })
-            .ToListAsync();
-
+        request.Tag = tag;
+        var posts = await handler.Handle(request, cancellationToken);
         return Ok(posts);
     }
 
     [HttpGet("por-categoria/{id}")]
-    public async Task<IActionResult> ObterPorCategoria([FromRoute] int id)
+    public async Task<IActionResult> ObterPorCategoria(
+        [FromServices] ListPostsByCategory.Handler handler,
+        [FromRoute] int id,
+        [FromQuery] ListPostsByCategory.Request request,
+        CancellationToken cancellationToken)
     {
-        IQueryable<Post> postsQuery = _db.Posts.AsNoTracking().Where(e => e.CategoriaId == id);
-
-        var posts = await postsQuery
-                        .Select(e => new PostResultado
-                        {
-                            Id = e.Id,
-                            Titulo = e.Titulo,
-                            Descritivo = e.Descritivo,
-                            Imagem = e.Imagem,
-                            Tags = e.Tags,
-                            Categoria = e.Categoria.Nome,
-                            CategoriaId = e.CategoriaId
-                        })
-            .ToListAsync();
-
+        request.CategoriaId = id;
+        var posts = await handler.Handle(request, cancellationToken);
         return Ok(posts);
     }
 
-    /// <summary>
-    /// Obtem os ultimos 5 posts
-    /// </summary>
-    /// <returns>Obtem todos posts</returns>
     [HttpGet("recentes")]
-    public async Task<IActionResult> ObterRecentes()
+    public async Task<IActionResult> ObterRecentes(
+        [FromServices] ListRecentPosts.Handler handler,
+        CancellationToken cancellationToken)
     {
-        var posts = await _db.Posts.AsNoTracking()
-            .Select(e => new PostRecenteResultado { Id = e.Id, Titulo = e.Titulo })
-            .Take(5).OrderByDescending(e => e.Id)
-            .ToListAsync();
-
+        var posts = await handler.Handle(cancellationToken);
         return Ok(posts);
     }
 
-    /// <summary>
-    /// Obtem os ultimos 5 posts
-    /// </summary>
-    /// <returns>Obtem todos posts</returns>
     [HttpGet("tags")]
-    public async Task<IActionResult> ObterTags()
+    public async Task<IActionResult> ObterTags(
+        [FromServices] ListTags.Handler handler,
+        CancellationToken cancellationToken)
     {
-        List<string> tags = await _db.Posts.AsNoTracking().Select(e => e.Tags).ToListAsync();
-
-        var tagsFormatadas = new List<string>();
-
-        foreach (var tag in tags)
-            if (!string.IsNullOrEmpty(tag))
-                tagsFormatadas.AddRange(tag.Split(",").Select(e => e.Trim()).ToList());
-
-        tagsFormatadas = tagsFormatadas.Distinct().OrderBy(e => e).ToList();
-
-        return Ok(tagsFormatadas);
+        var tags = await handler.Handle(cancellationToken);
+        return Ok(tags);
     }
 
-    /// <summary>
-    /// Obtem um post por id.
-    /// </summary>
-    /// <param name="id">Id do post.</param>
-    /// <returns>Dados do post</returns>
-    /// <response code="200">Retorna o post</response>
-    /// <response code="404">Se não encontrar o post</response>
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(PostResultado), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetPorId(int id)
+    public async Task<IActionResult> GetPorId(
+        [FromServices] GetPostById.Handler handler,
+        int id,
+        CancellationToken cancellationToken)
     {
-        var post = await _db.Posts.AsNoTracking()
-            .Where(e => e.Id == id)
-                    .Select(e => new PostResultado
-                    {
-                        Id = e.Id,
-                        Titulo = e.Titulo,
-                        Descritivo = e.Descritivo,
-                        Imagem = e.Imagem,
-                        Tags = e.Tags,
-                        Categoria = e.Categoria.Nome,
-                        CategoriaId = e.CategoriaId
-                    })
-            .SingleOrDefaultAsync();
-
-        if (post == null) return NotFound();
-
-        return Ok(post);
+        var post = await handler.Handle(id, cancellationToken);
+        return post == null ? NotFound() : Ok(post);
     }
 
-    /// <summary>
-    /// Cadastrar uma novo post.
-    /// </summary>
-    /// <param name="request">Dados do post.</param>
-    /// <returns>O post criado.</returns>
-    /// <response code="201">Retorna o post criado.</response>
-    /// <response code="400">Se os dados estiverem inválidos</response>
     [HttpPost]
-    [ProducesResponseType(typeof(PostCreate), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Post(PostCreate request)
+    public async Task<IActionResult> Post(
+        [FromServices] CreatePost.Handler handler,
+        [FromServices] IValidator<CreatePost.Request> validator,
+        CreatePost.Request request,
+        CancellationToken cancellationToken)
     {
-        if (!ModelState.IsValid) return CustomResponse(ModelState);
+        if (!await Validate(request, validator, cancellationToken))
+            return CustomResponse();
 
-        var tagsList = request.Tags.Split(",").Select(e => e.Trim()).ToList();
-        await _postService.Executar(request.Titulo, request.Categoria, request.Descritivo, tagsList, request.Imagem);
-        return Created();
-        //Categoria? cat = await _db.Categorias.AsNoTracking().SingleOrDefaultAsync(e => e.Nome == request.Categoria);
+        var (response, error) = await handler.Handle(request, cancellationToken);
 
-        //if (cat == null)
-        //{
-        //    AddError($"A categoria {request.Categoria} não foi encontrada.");
-        //    return CustomResponse();
-        //}
-        
-        //string tags = string.Join(",", request.Tags);
-        //var post = new Post(0, request.Titulo, request.Descritivo, request.Imagem, "", tags, cat.Id);
-        //_db.Posts.Add(post);
-        //await _db.SaveChangesAsync();
+        if (error != null)
+        {
+            AddError(error);
+            return CustomResponse();
+        }
 
-        //var postDTO = new PostResultado(post);
-
-        //return CreatedAtAction(nameof(Get), postDTO, request);
-
+        return CreatedAtAction(nameof(GetPorId), new { id = response!.Id }, response);
     }
 
-    /// <summary>
-    /// Atualiza um post.
-    /// </summary>
-    /// <param name="request">Dados do post.</param>
-    /// <returns>O post criado.</returns>
-    /// <response code="200">Retorna o post atualizado.</response>
-    /// <response code="400">Se os dados estiverem inválidos</response>
     [HttpPut]
-    [ProducesResponseType(typeof(PostUpdate), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Put(PostUpdate request)
+    public async Task<IActionResult> Put(
+        [FromServices] UpdatePost.Handler handler,
+        [FromServices] IValidator<UpdatePost.Request> validator,
+        UpdatePost.Request request,
+        CancellationToken cancellationToken)
     {
-        if (!ModelState.IsValid) return CustomResponse(ModelState);
+        if (!await Validate(request, validator, cancellationToken))
+            return CustomResponse();
 
-        Categoria? cat = await _db.Categorias.SingleOrDefaultAsync(e => e.Nome == request.Categoria);
+        var error = await handler.Handle(request, cancellationToken);
 
-        if (cat == null)
+        if (error != null)
         {
-            AddError($"A categoria {request.Categoria} não foi encontrada.");
+            AddError(error);
             return CustomResponse();
         }
 
-        Post? post = await _db.Posts.SingleOrDefaultAsync(e => e.Id == request.Id);
+        return CustomResponse();
+    }
 
-        if (post == null)
+    [HttpGet("admin")]
+    public async Task<IActionResult> GetAdmin(
+        [FromServices] AdminListPosts.Handler handler,
+        [FromQuery] AdminListPosts.Request request,
+        CancellationToken cancellationToken)
+    {
+        var posts = await handler.Handle(request, cancellationToken);
+        return Ok(posts);
+    }
+
+    [HttpGet("admin/{id}")]
+    public async Task<IActionResult> GetAdminById(
+        [FromServices] GetAdminPostById.Handler handler,
+        int id,
+        CancellationToken cancellationToken)
+    {
+        var post = await handler.Handle(id, cancellationToken);
+        return post == null ? NotFound() : Ok(post);
+    }
+
+    [HttpPost("admin")]
+    public async Task<IActionResult> PostAdmin(
+        [FromServices] CreateAdminPost.Handler handler,
+        [FromServices] IValidator<CreateAdminPost.Request> validator,
+        CreateAdminPost.Request request,
+        CancellationToken cancellationToken)
+    {
+        if (!await Validate(request, validator, cancellationToken))
+            return CustomResponse();
+
+        var (id, error) = await handler.Handle(request, cancellationToken);
+
+        if (error != null)
         {
-            AddError($"Não foi encontrado um post com id {request.Id}.");
+            AddError(error);
             return CustomResponse();
         }
 
-        post.Atualizar(request.Titulo, request.Descritivo, request.Imagem, request.Tags, cat.Id, "");
+        return CreatedAtAction(nameof(GetAdminById), new { id }, new { id });
+    }
 
-        await _db.SaveChangesAsync();
+    [HttpPut("admin/{id}")]
+    public async Task<IActionResult> PutAdmin(
+        [FromServices] UpdateAdminPost.Handler handler,
+        [FromServices] IValidator<UpdateAdminPost.Request> validator,
+        int id,
+        UpdateAdminPost.Request request,
+        CancellationToken cancellationToken)
+    {
+        request.Id = id;
 
-        var postDTO = new PostResultado(post);
+        if (!await Validate(request, validator, cancellationToken))
+            return CustomResponse();
 
-        return CreatedAtAction(nameof(Get), postDTO, request);
+        var error = await handler.Handle(request, cancellationToken);
+
+        if (error != null)
+        {
+            AddError(error);
+            return CustomResponse();
+        }
+
+        return CustomResponse();
+    }
+
+    [HttpDelete("admin/{id}")]
+    public async Task<IActionResult> DeleteAdmin(
+        [FromServices] DeletePost.Handler handler,
+        int id,
+        CancellationToken cancellationToken)
+    {
+        var error = await handler.Handle(id, cancellationToken);
+
+        if (error != null)
+        {
+            AddError(error);
+            return CustomResponse();
+        }
+
+        return CustomResponse();
+    }
+
+    private async Task<bool> Validate<TRequest>(
+        TRequest request,
+        IValidator<TRequest> validator,
+        CancellationToken cancellationToken)
+    {
+        var result = await validator.ValidateAsync(request, cancellationToken);
+
+        foreach (var error in result.Errors)
+            AddError(error.ErrorMessage);
+
+        return result.IsValid;
     }
 }

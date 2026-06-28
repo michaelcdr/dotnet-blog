@@ -45,7 +45,7 @@
                         </div>
                     }
                     <div class="article-content">
-                        @Html.Raw(Model.Descritivo)
+                        @Html.Raw(CodingBlog.Services.MarkdownRenderer.ToHtml(Model.Descritivo))
                     </div> 
                     <div class="lista-tags">
                         @foreach (var tag in Model.ObterTags())

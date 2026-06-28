@@ -1,4 +1,3 @@
-﻿using CodingBlog.Services;
 using CodingBlog.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,77 +6,52 @@ namespace CodingBlog.Controllers.Admin;
 [Route("admin")]
 public class AdminCategoriaController : Controller
 {
-    private readonly IBlogApiService _client;
-
-    public AdminCategoriaController(IBlogApiService client)
-    {
-        _client = client;
-    }
-
     [Route("categoria")]
-    public async Task<ActionResult> Index()
+    public IActionResult Index()
     {
-        return View(await _client.ObterCategorias());
+        return RedirectToAction("Index", "Categories", new { area = "Admin" });
     }
 
     [Route("categoria/detalhes/{id}")]
-    public ActionResult Details(int id)
+    public IActionResult Details(int id)
     {
-        return View();
+        return RedirectToAction("Edit", "Categories", new { area = "Admin", id });
     }
 
     [Route("categoria/cadastrar")]
-    public ActionResult Cadastrar()
+    public IActionResult Cadastrar()
     {
-        return View();
+        return RedirectToAction("Create", "Categories", new { area = "Admin" });
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Cadastrar(CategoriaCadastroModel categoria)
+    public IActionResult Cadastrar(CategoriaCadastroModel categoria)
     {
-        if (!ModelState.IsValid) return View(categoria);
-        
-        await _client.CriarCategoria(categoria);
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction("Create", "Categories", new { area = "Admin" });
     }
 
-    public async Task<ActionResult> Editar(int id)
+    public IActionResult Editar(int id)
     {
-        CategoriaEdicaoModel categoria = await _client.ObterCategoriaPorId(id);
-        return View(categoria);
+        return RedirectToAction("Edit", "Categories", new { area = "Admin", id });
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Editar(int id, IFormCollection collection)
+    public IActionResult Editar(int id, IFormCollection collection)
     {
-        try
-        {
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View();
-        }
+        return RedirectToAction("Edit", "Categories", new { area = "Admin", id });
     }
 
-    public ActionResult Deletar(int id)
+    public IActionResult Deletar(int id)
     {
-        return View();
+        return RedirectToAction("Delete", "Categories", new { area = "Admin", id });
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Deletar(int id, IFormCollection collection)
+    public IActionResult Deletar(int id, IFormCollection collection)
     {
-        try
-        {
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View();
-        }
+        return RedirectToAction("Delete", "Categories", new { area = "Admin", id });
     }
 }

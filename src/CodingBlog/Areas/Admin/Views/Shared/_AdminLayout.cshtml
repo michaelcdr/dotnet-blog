@@ -1,0 +1,61 @@
+@using CodingBlog.Configuracoes
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Options
+@inject IOptions<AppSettings> AppOptions
+<!DOCTYPE html>
+<html lang="pt-br" data-layout="@(AppOptions.Value.VisualSettings.Layout?.ToLowerInvariant() ?? "classic")">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Coding Blog</title>
+    <script>
+        (function () {
+            var theme = localStorage.getItem("coding-blog-theme") || "dark";
+            document.documentElement.setAttribute("data-theme", theme);
+        })();
+    </script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="admin-body">
+    <header class="admin-header">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3 py-3">
+            <div>
+                <a class="admin-brand" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Coding Blog Admin</a>
+                <div class="admin-subtitle">Gerencie posts e categorias</div>
+            </div>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <nav class="admin-nav d-flex align-items-center gap-2">
+                    <a class="btn btn-sm btn-outline-primary" asp-area="Admin" asp-controller="Posts" asp-action="Index">Posts</a>
+                    <a class="btn btn-sm btn-outline-primary" asp-area="Admin" asp-controller="Categories" asp-action="Index">Categorias</a>
+                    <a class="btn btn-sm btn-outline-primary" asp-area="" asp-controller="Home" asp-action="Index">Ver site</a>
+                    <form asp-area="Admin" asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-primary">Sair</button>
+                    </form>
+                </nav>
+            }
+        </div>
+    </header>
+
+    <main class="container admin-main py-4">
+        @if (TempData["AdminSuccess"] is string successMessage)
+        {
+            <div class="alert alert-success">@successMessage</div>
+        }
+
+        @if (TempData["AdminError"] is string errorMessage)
+        {
+            <div class="alert alert-danger">@errorMessage</div>
+        }
+
+        @RenderBody()
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/admin-grid.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

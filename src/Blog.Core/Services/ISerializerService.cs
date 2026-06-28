@@ -20,7 +20,8 @@ public class SerializerService : ISerializerService
             PropertyNameCaseInsensitive = true
         };
 
-        return JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), options);
+        return JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), options)
+            ?? throw new JsonException("Nao foi possivel desserializar a resposta.");
     }
 
     public StringContent FormatContent(object data)

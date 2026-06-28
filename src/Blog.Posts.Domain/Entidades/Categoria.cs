@@ -24,4 +24,10 @@ public class Categoria
     {
         QtdPosts++;
     }
+
+    public void DecrementarQtdPosts()
+    {
+        if (QtdPosts > 0)
+            QtdPosts--;
+    }
 }

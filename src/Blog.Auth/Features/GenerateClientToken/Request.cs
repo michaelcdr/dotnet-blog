@@ -1,0 +1,7 @@
+namespace Blog.Auth.Features.GenerateClientToken;
+
+public class Request
+{
+    public string ClientId { get; set; } = string.Empty;
+    public string ClientSecret { get; set; } = string.Empty;
+}

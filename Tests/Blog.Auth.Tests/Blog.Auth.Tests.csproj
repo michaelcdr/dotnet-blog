@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Blog.Auth\Blog.Auth.csproj" />
+    <ProjectReference Include="..\..\src\CodingBlog\CodingBlog.csproj" />
   </ItemGroup>
 
   <ItemGroup>

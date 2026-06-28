@@ -1,11 +1,13 @@
-namespace CodingBlog.Models;
+﻿namespace CodingBlog.Models;
 
 public class PostsPorTagViewModel
 {
-    public PostsPorTagViewModel(List<PostViewModel> posts )
+    public PostsPorTagViewModel(PagedResult<PostViewModel> posts)
     {
-        Posts = posts; 
+        Posts = posts.Items;
+        Paginacao = posts;
     }
 
-    public List<PostViewModel> Posts { get; } 
+    public List<PostViewModel> Posts { get; }
+    public PagedResult<PostViewModel> Paginacao { get; }
 }

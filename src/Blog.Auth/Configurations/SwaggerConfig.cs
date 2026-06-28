@@ -8,6 +8,7 @@ public static class SwaggerConfig
     {
         services.AddSwaggerGen(c =>
         {
+            c.CustomSchemaIds(type => (type.FullName ?? type.Name).Replace("+", "."));
             c.SwaggerDoc("v1", new OpenApiInfo
             {
                 Title = "Marketplace - API de Autenticação",
@@ -29,7 +30,9 @@ public static class SwaggerConfig
 
     public static IApplicationBuilder UseSwaggerConfig(this IApplicationBuilder app, IWebHostEnvironment hostEnvironment)
     {
-        if (hostEnvironment.IsDevelopment())
+        var configuration = app.ApplicationServices.GetRequiredService<IConfiguration>();
+
+        if (hostEnvironment.IsDevelopment() || configuration.GetValue<bool>("Swagger:Enabled"))
         {
             app.UseSwagger();
             app.UseSwaggerUI(c =>

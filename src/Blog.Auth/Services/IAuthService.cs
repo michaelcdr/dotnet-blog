@@ -6,5 +6,5 @@ namespace Blog.Auth.Services;
 
 public interface IAuthService
 {
-    Task<AppResponse<TokenGeneratedResponse>> Login(UserLogin request);
+    Task<AppResponse<TokenGeneratedResponse>> Login(UserLogin request, CancellationToken cancellationToken = default);
 }

@@ -73,9 +73,9 @@ public class TokenGenerator : ITokenGenerator
             Issuer = _jwtConfig.Issuer,
             Audience = _jwtConfig.Audience,
             Subject = claimsIdentity,
-            Expires = DateTime.UtcNow.AddHours(2),
+            Expires = DateTime.UtcNow.AddHours(_jwtConfig.ExpiresIn),
             SigningCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtConfig.Secret)),
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.Secret)),
                 SecurityAlgorithms.HmacSha256Signature
             )
         };

@@ -9,27 +9,26 @@ public class PostController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IBlogApiService _client;
 
-    public PostController(ILogger<HomeController> logger,
-                          IBlogApiService client)
+    public PostController(ILogger<HomeController> logger, IBlogApiService client)
     {
         _logger = logger;
-        _client = client; 
+        _client = client;
     }
 
     [Route("Post/PorTag/{tag}")]
-    public async Task<IActionResult> PorTag(string tag)
-    {  
+    public async Task<IActionResult> PorTag(string tag, int page = 1)
+    {
         ViewBag.Tag = tag;
-        List<PostViewModel> posts = await _client.ObterPostsPorTags(tag);
+        PagedResult<PostViewModel> posts = await _client.ObterPostsPorTags(tag, page);
         var model = new PostsPorTagViewModel(posts);
         return View(model);
-    } 
+    }
 
-    public async Task<IActionResult> PorCategoria(int id)
+    public async Task<IActionResult> PorCategoria(int id, int page = 1)
     {
-        PostsPorCategoriaViewModel model = await _client.ObterPostsPorCategoria(id);
+        PostsPorCategoriaViewModel model = await _client.ObterPostsPorCategoria(id, page);
         return View(model);
-    } 
+    }
 
     public async Task<IActionResult> Detalhes(int id)
     {
@@ -38,10 +37,10 @@ public class PostController : Controller
     }
 
     [Route("Post/Pesquisa/{pesquisa}")]
-    public async Task<IActionResult> Pesquisa(string pesquisa)
+    public async Task<IActionResult> Pesquisa(string pesquisa, int page = 1)
     {
         ViewBag.Pesquisa = pesquisa;
-        List<PostViewModel> posts = await _client.ObterPostsPorTermoPesquisa(pesquisa);
+        PagedResult<PostViewModel> posts = await _client.ObterPostsPorTermoPesquisa(pesquisa, page);
         return View(posts);
     }
 }

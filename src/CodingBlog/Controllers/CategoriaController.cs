@@ -13,9 +13,9 @@ public class CategoriaController : Controller
         _client = client;
     }
 
-    public async Task<IActionResult> Index()
-    { 
-        var categorias = await _client.ObterCategorias(); 
+    public async Task<IActionResult> Index(int page = 1)
+    {
+        var categorias = await _client.ObterCategorias(page);
         return View(categorias);
     }
 
@@ -25,11 +25,11 @@ public class CategoriaController : Controller
     }
 
     [HttpPost]
-    public IActionResult Cadastrar(CategoriaCadastroModel categoria)
+    public async Task<IActionResult> Cadastrar(CategoriaCadastroModel categoria)
     {
         if (!ModelState.IsValid) return View(categoria);
 
-        _client.CriarCategoria(categoria);
-        return RedirectToAction("Index");        
+        await _client.CriarCategoria(categoria);
+        return RedirectToAction("Index");
     }
 }

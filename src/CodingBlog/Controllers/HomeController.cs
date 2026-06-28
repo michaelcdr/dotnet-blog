@@ -10,19 +10,21 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IBlogApiService _client;
 
-    public HomeController(ILogger<HomeController> logger,
-                          IBlogApiService client)
+    public HomeController(ILogger<HomeController> logger, IBlogApiService client)
     {
         _logger = logger;
-        _client = client; 
+        _client = client;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int page = 1)
     {
-        List<PostViewModel> posts = await _client.ObterPostsPorTermoPesquisa();
-        ViewBag.Posts = posts;
+        PagedResult<PostViewModel> posts = await _client.ObterPostsPorTermoPesquisa(page: page);
+        ViewBag.Posts = posts.Items;
+        ViewBag.Paginacao = posts;
+        ViewBag.PaginationAction = nameof(Index);
+        ViewBag.PaginationController = "Home";
         return View();
-    } 
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

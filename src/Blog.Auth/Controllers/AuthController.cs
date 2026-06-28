@@ -1,42 +1,49 @@
-﻿using Blog.Auth.Jwt;
-using Blog.Auth.Models;
-using Blog.Auth.Services;
-using Blog.Core.Controller;
+﻿using Blog.Core.Controller;
 using Blog.Core.Models;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Login = Blog.Auth.Features.Login;
 
 namespace Blog.Auth.Controllers;
 
 [Route("api/conta")]
 public class AuthController : MainApiController
 {
-    private readonly IAuthService _userService;
-
-    public AuthController(IAuthService userService)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(
+        [FromServices] Login.Handler handler,
+        [FromServices] IValidator<Login.Request> validator,
+        Login.Request request,
+        CancellationToken cancellationToken)
     {
-        _userService = userService;
+        if (!await Validate(request, validator, cancellationToken))
+            return CustomResponse();
+
+        var response = await handler.Handle(request, cancellationToken);
+        return BuildResponse(response);
     }
 
-    /// <summary>
-    /// Gera um token para usar na autenticação da API
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
-    [HttpPost("login")]
-    public async Task<IActionResult> Login(UserLogin model)
+    private IActionResult BuildResponse<T>(AppResponse<T> response)
     {
-        if (!ModelState.IsValid) return CustomResponse(ModelState);
+        if (response.Success)
+            return CustomResponse(response.Data);
 
-        AppResponse<TokenGeneratedResponse> response = await _userService.Login(model);
+        foreach (var item in response.Errors)
+            AddError(item.Message);
 
-        if (!response.Success)
-        {
-            foreach (var item in response.Errors)
-                AddError(item.Message);
+        return CustomResponse();
+    }
 
-            return CustomResponse();
-        }
+    private async Task<bool> Validate<TRequest>(
+        TRequest request,
+        IValidator<TRequest> validator,
+        CancellationToken cancellationToken)
+    {
+        var result = await validator.ValidateAsync(request, cancellationToken);
 
-        return CustomResponse(response.Data);
+        foreach (var error in result.Errors)
+            AddError(error.ErrorMessage);
+
+        return result.IsValid;
     }
 }
